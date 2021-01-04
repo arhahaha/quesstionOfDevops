@@ -1,0 +1,1360 @@
+问题#＃23主题1
+
+媒体客户在一个AWS账户中有数千个Amazon EC2实例。客户正在使用Slack渠道进行团队沟通和重要更新。要求DevOps工程师将所有AWS安排的EC2维护通知发送到公司的Slack通道。
+工程师应使用哪种方法以最少的步骤实施此过程？
+
+A.将AWS Trusted Advisor与AWS Config集成。基于创建的AWS Config规则，AWS Config事件可以调用AWS Lambda函数以将通知发送到Slack通道。
+
+B.将AWS Personal Health仪表板与Amazon CloudWatch Events集成。基于创建的CloudWatch Events，该事件可以调用AWS Lambda函数以将通知发送到Slack通道。
+
+C.将EC2事件与Amazon CloudWatch监控集成。基于创建的CloudWatch警报，警报可以调用AWS Lambda函数以将EC2维护通知发送到Slack通道。
+
+D.将AWS Support与AWS CloudTrail集成。基于创建的CloudTrail查找事件，该事件可以调用AWS Lambda函数以将EC2维护通知传递到Slack通道。
+ 
+
+
+
+
+
+
+
+
+B
+问题#＃24主题1
+
+在进行灾难恢复演习之后，企业架构师发现，庞大的数据库和存储管理员团队需要超过七个小时的手动工作才能使旗舰应用程序的数据库在不同的AWS区域中正常工作。架构师还发现，恢复的数据库经常丢失多达两个小时的数据事务。
+哪种解决方案在跨区域故障转移方案中提供了改进的RTO和RPO？
+
+A.部署由多区域Amazon EFS支持的Amazon RDS Multi-AZ实例。配置RDS选项组以启用多区域可用性，以实现跨区域恢复和连续数据复制的本机自动化。创建一个订阅了RDS影响事件的Amazon SNS主题，以便在单个可用区中检测到重大查询延迟时，将电子邮件发送给数据库管理团队。
+
+B.使用Amazon SNS主题接收来自Amazon RDS可用性和备份事件的已发布消息。将AWS Lambda用于三个单独的功能，同时调用Amazon RDS以对数据库实例进行快照，创建跨区域快照副本以及从快照还原实例。以与RPO匹配的频率使用计划的Amazon CloudWatch Events规则来触发Lambda函数以快照数据库实例。当备份事件的SNS主题收到新消息时，触发Lambda函数以创建跨区域快照副本。配置Lambda函数以从快照还原实例，以触发发送已发布到可用性SNS主题的新消息。
+
+C.创建一个计划的Amazon CloudWatch Events规则以调用Amazon RDS，以从数据库实例创建快照并指定与RPO匹配的频率。创建一个AWS Step Functions任务以调用Amazon RDS以执行跨区域快照复制到故障转移区域中，并配置状态机以在RDS快照创建状态完成后执行该任务。创建订阅了RDS可用性事件的SNS主题，并将这些消息推送到位于故障转移区域中的Amazon SQS队列。在跨区域复制的快照的校验和返回有效后，将工作节点的Auto Scaling组配置为轮询队列以查找新消息，并调用Amazon RDS以从快照还原数据库。
+
+D.使用Amazon RDS计划的实例生命周期事件创建快照并指定匹配RPO的频率。使用Amazon RDS计划的实例生命周期事件配置，以在SnapshotCreateComplete事件发生时将跨区域快照复制到故障转移区域。将Amazon CloudWatch配置为在数据库实例的CloudWatch RDS名称空间CPUUtilization指标下降到0％时发出警报，并调用Amazon RDS以在故障转移区域中还原数据库快照。
+
+
+
+
+
+
+
+
+
+
+
+B
+问题#＃25主题1
+
+一家公司已在全球部署了多个应用程序。最近，安全审计员发现，几乎没有启动没有Amazon EBS磁盘加密的Amazon EC2实例。审核员要求提供一份报告，详细说明在多个AWS账户和区域中未加密的所有EBS卷。他们还希望在将来发生这种情况时得到通知。
+如何用最少的运营开销实现自动化？
+
+A.创建一个AWS Lambda函数以在所有目标账户上设置一个AWS Config规则。使用AWS Config聚合器从多个账户和区域收集数据。将汇总的报告导出到Amazon S3存储桶，然后使用Amazon SNS交付通知。
+
+B.设置AWS CloudTrail以将所有事件传递到集中式帐户中的Amazon S3存储桶。每当将日志传递到S3存储桶时，使用S3事件通知功能来调用AWS Lambda函数来解析AWS CloudTrail日志。使用相同的Lambda函数将输出发布到Amazon SNS主题。
+
+C.创建一个AWS CloudFormation模板，该模板添加用于EBS加密的AWS Config托管规则。使用CloudFormation堆栈集在所有帐户和区域中部署模板。将配置规则中的合并评估结果存储在Amazon S3中。当检测到不兼容的资源时，使用Amazon SNS发送通知。
+
+D.使用AWS CLI，定期运行脚本，该脚本使用JMESPATH查询过滤器调用aws ec2 describe-volumes查询。然后，将输出写入Amazon S3存储桶。设置S3事件通知，以在将新数据写入S3存储桶时使用Amazon SNS发送事件。
+ 
+
+
+
+
+
+
+
+
+C
+
+
+问题#＃31主题1
+
+要求DevOps工程师实施零停机时间将更新部署到Web应用程序的策略。 应用程序基础结构在
+AWS CloudFormation，由Amazon Route 53记录，应用程序负载均衡器，EC2 Auto Scaling组中的Amazon EC2实例和Amazon DynamoDB表组成。 为避免停机，必须始终有一个活动实例为应用程序提供服务。
+哪些策略将确保部署在零停机时间内发生？ （选择两个。）
+
+
+A. 在CloudFormation模板中，修改AWS :: AutoScaling :: AutoscalingGroup资源并添加UpdatePolicy属性，以定义停机时间为零的部署所需的元素。
+
+B.在CloudFormation模板中，修改AWS :: AutoScaling :: DeploymentUpdates资源并添加UpdatePolicy属性，以定义停机时间为零的部署所需的元素。
+
+C.向CloudFormation模板添加一个新的Application Load Balancer和Auto Scaling组。将新更改部署到不活动的Auto Scaling组。使用路由53更改活动的应用程序负载平衡器。
+
+D.将一个新的Application Load Balancer和Auto Scaling组添加到CloudFormation模板。修改AWS :: AutoScaling :: AutoScalingGroup资源，并添加UpdatePolicy属性以执行滚动更新。
+
+E.在CloudFormation模板中，修改CloudFormation堆栈的UpdatePolicy属性，并指定将要更新的Auto Scaling组。配置MinSuccessfulInstancesPercent和PauseTime以确保部署在零停机时间进行。
+ 
+
+
+
+
+
+
+
+
+AC
+问题#＃32主题1
+
+DevOps工程师必须以自动化方式创建Linux AMI。 新创建的AMI标识必须存储在其他构建管道可以以编程方式访问新标识的位置。
+什么是最具成本效益的方法？
+
+A.在AWS CodePipeline中构建管道，以下载最新的操作系统开放虚拟化格式（OVF）映像并将其保存到Amazon S3存储桶，然后使用guestfish实用程序自定义映像。使用虚拟机（VM）import命令将OVF转换为AMI，并将AMI标识输出存储为AWS Systems Manager参数。
+
+B.用指示如何创建映像的值创建一个AWS Systems Manager自动化文档。然后在AWS CodePipeline中构建管道，以在触发时执行自动化文档以构建AMI。将AMI标识输出存储为系统管理器参数。
+
+C.在AWS CodePipeline中构建管道以拍摄运行最新版本应用程序的Amazon EC2实例的快照。然后从快照启动新的EC2实例，并使用AWS Lambda函数更新正在运行的实例。拍摄更新后实例的快照，然后将其转换为AMI。将AMI标识输出存储在Amazon DynamoDB表中。
+
+D.启动一个Amazon EC2实例并安装Packer。然后使用定义如何创建映像的值配置一个Packer构建。构建一个Jenkins管道，以在触发构建AMI时调用Packer构建。将AMI标识输出存储在Amazon DynamoDB表中。
+
+
+
+
+
+
+
+
+
+
+
+B
+问题#＃33主题1
+
+正在使用两个Amazon EC2 Auto Scaling组部署一个应用程序，每个组都配置了一个Application Load Balancer。该应用程序已部署到Auto Scaling组之一，并且Amazon Route 53别名记录指向最后部署的Auto Scaling组的Application Load Balancer。
+部署在两个Auto Scaling组之间交替进行。
+家庭安全设备正在向应用程序发出请求。开发团队注意到，在部署之后，新的请求将进入旧的堆栈天。此问题是由未遵守Amazon Route 53别名记录上的生存时间（TTL）设置的设备引起的。
+DevOps工程师应采取什么步骤来解决旧堆栈中的请求，同时又能减少额外的资源？
+
+A.创建一个在应用程序负载均衡器后面运行HAProxy的Amazon EC2实例队列。 HAProxy实例会将请求代理到现有的Auto Scaling组之一。部署后，将更新HAProxy实例，以将请求发送到新部署的Auto Scaling组。
+
+B.将应用程序简化为一个应用程序负载平衡器。创建两个名为“蓝色”和“绿色”的目标组。在指向单个目标组的Application Load Balancer上创建一个规则。向部署中添加逻辑，以将Application Load Balancer规则更新为新部署的Auto Scaling组的目标组。
+
+C.将应用程序移动到具有两个环境的AWS Elastic Beanstalk应用程序。在非实时环境中执行新部署。部署后，执行Elastic Beanstalk CNAME交换，以使新部署的环境成为实时环境。
+
+D.创建一个Amazon CloudFront发行版。将两个现有的应用程序负载均衡器设置为分发中的源。部署后，更新CloudFront分发行为以将请求发送到新部署的Auto Scaling组。
+ 
+
+
+
+
+
+
+
+
+B
+
+问题#＃36主题1
+
+应用程序在应用程序负载均衡器后面的Amazon EC2实例上运行。 后端使用Amazon RDS MySOL。 实例在多个可用区中的Auto Scaling组中运行。 应用程序负载平衡器运行状况检查可确保Web服务器正常运行并能够建立读/写SQL连接。 Amazon Route 53为DNS功能提供了指向应用程序负载平衡器的记录。 一项新策略要求地理隔离的灾难恢复站点的RTO为4小时，RPO为15分钟。
+哪种灾难恢复策略将需要对应用程序堆栈进行最少的更改？
+
+A.在不同的可用区中启动除RDS以外的所有内容的副本堆栈。在新的可用区中创建RDS只读副本，并将新堆栈配置为指向本地RDS实例。使用故障转移路由策略将新堆栈添加到Route 53记录集中。
+
+B.在其他区域启动除RDS之外的所有内容的副本堆栈。在新区域中创建RDS只读副本，并将新堆栈配置为指向本地RDS实例。使用延迟路由策略将新堆栈添加到Route 53记录集中。
+
+C.在其他区域启动除RDS以外的所有内容的副本堆栈。失败后，将快照从主区域复制到灾难恢复区域。调整Amazon Route 53记录集以指向灾难恢复区域的Application Load Balancer。
+
+D.在其他区域启动除RDS以外的所有内容的副本堆栈。在新区域中创建RDS只读副本，并将新堆栈配置为指向本地RDS实例。使用故障转移路由策略将新堆栈添加到Amazon Route 53记录集。
+
+
+
+
+
+
+
+
+
+
+D
+问题#＃37主题1
+
+一家公司希望使用Amazon DynamoDB在其论坛上维护元数据。请参见下图中的示例数据集。
+
+需要DevOps工程师使用分区键，排序键，本地二级索引，投影属性和获取操作来定义表模式。
+该模式应支持使用最少配置的读取容量单位的以下示例搜索，以最大程度地降低成本。
+-在ForumName中搜索主题以“〜a”开头的项目。
+-在给定的LastPostDateTime时间范围内搜索论坛。
+-返回最近三个月内LastPostDateTime所在的线程值。
+哪种架构符合要求？
+
+A. 使用主题作为主键，并使用ForumName作为排序键。使LSI具有LastPostDateTime作为排序键并进行线程的提取操作。
+
+B.使用ForumName作为主键，并使用Subject作为排序键。使LSI的LastPostDateTime作为排序键和计划的属性线程。
+
+C.使用ForumName作为主键，并使用Subject作为排序键。将LSI和Thread作为排序键，并将其投影属性设为LastPostDateTime。
+
+D.使用Subject作为主键，使用ForumName作为排序键。将具有Thread的LSI作为排序键，并进行LastPostDateTime的获取操作。
+ 
+
+
+
+
+B
+
+
+
+
+问题#＃38主题1
+
+一家公司使用AWS CloudFormation部署了一个三层Web应用程序，该应用程序将数据存储在Amazon RDS MySOL Multi-AZ数据库实例中。 DevOps工程师必须将RDS实例升级到MySQL的最新主要版本，同时减少停机时间。
+工程师应如何在最小化停机时间的同时升级实例？
+
+A.将CloudFormation模板中AWS :: RDS :: DBInstance资源类型的EngineVersion属性更新为最新的所需版本。启动第二个堆栈，并使新的RDS实例成为读取副本一种。
+
+B.将CloudFormation模板中AWS :: RDS :: DBInstance资源类型的DBEngineVersion属性更新为最新的所需版本。执行更新堆栈操作。创建一个新的RDS只读副本资源，该资源具有与要升级的实例相同的属性。执行第二个更新堆栈操作。
+
+C.将CloudFormation模板中AWS :: RDS :: DBInstance资源类型的DBEngineVersion属性更新为最新的所需版本。创建一个新的RDS只读副本资源，该资源具有与要升级的实例相同的属性。执行更新堆栈操作。
+
+D.将CloudFormation模板中AWS :: RDS :: DBInstance资源类型的EngineVersion属性更新为最新版本，然后执行操作。更新堆栈
+ 
+
+
+
+
+
+
+
+A
+问题#＃39主题1
+
+一家零售公司已采用AWS OpsWorks来管理其部署。在过去的三个月中，该公司发现一些生产实例已经无故重启。检查AWS CloudTrail日志后，DevOps工程师确定这些实例已由OpsWorks重新启动。现在，当实例被认为不正常或无法与服务端点进行通信时，只要OpsWorks重新启动实例，工程师便希望自动发送电子邮件通知。
+工程师如何满足此要求？
+
+A.创建一个厨师食谱，以放置cron来在Amazon EC2实例中运行自定义脚本，如果OpsWorks代理检测到实例故障，该Amazon EC2实例将通过Amazon SES向团队发送电子邮件。
+
+B.创建一个Amazon SNS主题，并为此主题创建一个包含目标电子邮件地址的订阅。创建Amazon CloudWatch规则：指定为源，并在initiated_by详细信息中指定自动修复。使用SNS主题作为目标。 aws.opsworks
+
+C.创建一个Amazon SNS主题，并为此主题创建一个包含目标电子邮件地址的订阅。创建指定为源的Amazon CloudWatch规则，并在initiated_by详细信息中指定实例替换。使用SNS主题作为目标。 aws.opsworks
+
+D.为此主题创建一个包含电子邮件地址的订阅。在OpsWorks层中启用实例重新启动通知，并指定通知的目标电子邮件地址。
+ 
+
+
+
+
+
+
+B
+
+
+
+
+
+问题#＃44主题1
+
+DevOps工程师正在部署新的Web应用程序。 该公司选择使用AWS Elastic Beanstalk来部署和管理Web应用程序，并选择Amazon RDS MySQL来处理持久性数据。 该公司要求，如果新部署失败，其影响将降至最低。 部署过程中，应用程序资源必须为最大容量，并且还必须回滚部署。
+哪些部署顺序可以满足这些要求？
+
+A.使用Elastic Beanstalk部署应用程序，并使用Elastic Beanstalk环境属性连接到外部RDS MySQL实例。使用Elastic Beanstalk功能进行蓝/绿部署，以将新版本部署到单独的环境中，然后在两个环境中交换CNAME以将流量重定向到新版本。
+
+B.使用Elastic Beanstalk部署应用程序，并将RDS MySQL作为环境的一部分。使用默认的Elastic Beanstalk行为将更改部署到应用程序，并让滚动更新将更改部署到应用程序。
+
+C.使用Elastic Beanstalk部署应用程序，并将RDS MySQL包含在环境中。使用Elastic Beanstalk不可变更新进行应用程序部署。
+
+D.使用Elastic Beanstalk部署应用程序，并使用Elastic Beanstalk环境属性连接到外部RDS MySQL实例。使用Elastic Beanstalk不可变更新进行应用程序部署。
+
+
+
+
+
+
+
+
+A?D
+
+
+
+问题#＃47主题1
+
+DevOps工程师正在使用AWS CodePipeline和AWS CodeBuild为无服务器应用程序构建连续的部署管道。源，构建和测试阶段已创建，剩下的部署阶段仍然存在。该公司希望通过部署到指定的客户子集并在完全发布给所有客户之前进行监视来降低部署失败的风险。
+应如何配置部署阶段以满足这些要求？
+
+A.使用AWS CloudFormation在每次堆栈更新上发布新版本。然后，为开发人员设置CodePipeline批准操作，以测试和批准新版本。最后，使用CodePipeline调用操作来更新AWS Lambda函数以使用生产别名
+
+B.使用CodeBuild使用AWS CLI更新AWS Lambda函数代码，然后发布函数的新版本并更新生产别名以指向函数的新版本。
+
+C.使用AWS CloudFormation定义无服务器应用程序，使用AWS CodeDeploy通过DeploymentPreference：部署AWS Lambda函数。金丝雀10％15分钟
+
+D.使用AWS CloudFormation在每次堆栈更新上发布新版本。使用AWS :: Lambda :: Alias资源的RoutingConfig属性在堆栈更新期间更新流量路由。
+ 
+
+
+
+
+
+
+
+C
+
+问题#＃48主题1
+
+DevOps工程师必须跟踪位于经典负载均衡器后面的无状态RESTful服务的运行状况。新的应用程序修订版的部署是通过Cl / CD管道进行的。如果服务的延迟增加到超过定义的阈值，则应停止部署，直到服务恢复为止。
+下列哪种方法允许QUICKEST检测时间？
+
+A.使用Elastic Load Balancing提供的Amazon CloudWatch指标来计算平均延迟。当延迟超过定义的阈值时，发出警报并停止部署。
+
+B.使用AWS Lambda和Elastic Load Balancing访问日志来检测平均延迟。当延迟增加超过定义的阈值时，发出警报并停止部署。
+
+C.使用AWS CodeDeploy的MinimumHealthyHosts设置定义回滚部署的阈值。如果违反了这些阈值，请回滚部署。
+
+D.使用指标过滤器来解析Amazon CloudWatch Logs中的应用程序日志。创建一个延迟过滤器。当延迟增加超过定义的阈值时，发出警报并停止部署。
+
+
+
+
+
+
+
+
+
+
+
+A
+问题#＃50主题1
+
+公司需要将分布式Web应用程序的自动DNS故障转移引入灾难恢复或备用安装。 DevOps工程师计划将Amazon Route 53配置为在应用程序发生故障时提供DNS路由到备用端点。
+工程师应采取哪些步骤来完成此任务？ （选择两个。）
+
+A.为无法作为别名记录输入的每个终端创建Amazon Route 53健康检查。确保防火墙和路由规则允许Amazon Route 53将请求发送到运行状况检查中指定的端点。
+
+B.创建将流量路由到AWS资源的别名记录，并将“评估目标运行状况”选项的值设置为“是”，然后创建所有非别名记录。
+
+C.创建一个主要的Amazon Route 53记录集，将其设置为故障转移，并将其与主要和辅助Amazon Route 53记录集关联，以将流量分配到正常的DNS条目。
+
+D.创建一个Amazon CloudWatch警报以监视主要的Amazon Route 53 DNS条目。然后创建关联的AWS Lambda函数，以执行对路由53到辅助DNS条目的故障转移API调用。
+
+E.使用主要和次要来源将主要和次要Amazon Route 53记录集映射到Amazon CloudFront分配。
+ 
+
+
+
+
+
+
+
+AC
+
+问题#＃51主题1
+
+一家公司正在实施Amazon ECS集群以运行其工作负载。 该公司的体系结构将在群集上运行多个ECS服务，并在前端运行一个Application Load Balancer，使用多个目标组路由流量。 应用程序开发团队一直在努力收集必须收集并发送到Amazon S3存储桶以进行近实时分析的日志。
+DevOps工程师必须在部署中配置什么才能满足这些要求？ （选择三个）
+
+A.在ECS实例上安装Amazon CloudWatch Logs日志记录代理。将ECS任务定义中的日志记录驱动程序更改为“ awslogs”。
+
+B.从AWS下载Amazon CloudWatch Logs容器实例并将其配置为任务。更新应用程序服务定义以包括日志记录任务。
+
+C.使用Amazon CloudWatch Events安排一个AWS Lambda函数，该函数每60秒钟运行一次create-export -task CloudWatch Logs命令，然后将输出指向日志记录S3存储桶。
+
+D.在Application Load Balancer上启用访问日志记录，然后将其直接指向S3日志存储桶。
+
+E.在ECS服务使用的目标组上启用访问日志记录，然后将其直接指向S3日志存储桶。
+
+F.创建一个具有S3日志存储桶目标的Amazon Kinesis Data Firehose，然后为Kinesis创建Amazon CloudWatch Logs订阅过滤器。
+ 
+
+
+
+
+
+
+
+ADF
+A
+https://docs.aws.amazon.com/zh_cn/AmazonECS/latest/developerguide/using_cloudwatch_logs.html#installing_cwl_agent
+D
+https://docs.aws.amazon.com/zh_cn/elasticloadbalancing/latest/application/load-balancer-access-logs.html
+
+问题#＃52主题1
+
+开发团队当前正在使用AWS CodeDeploy将应用程序修订版部署到Auto Scaling组。如果部署过程失败，则必须自动回滚并发送通知。
+可以满足所有要求的最有效的配置是什么？
+
+A.为CodeDeploy操作创建Amazon CloudWatch Events规则。配置CloudWatch Events规则以在部署失败时发送Amazon SNS消息。将CodeDeploy配置为在部署失败时自动回滚。
+
+B.使用可用的Amazon CloudWatch指标进行CodeDeploy创建CloudWatch警报。配置CloudWatch警报以在部署失败时发送Amazon SNS消息。使用AWS CLI重新部署先前部署的修订。
+
+C.配置CodeDeploy代理以创建触发器，当部署失败时，该触发器将向Amazon SNS主题发送通知。将CodeDeploy配置为在部署失败时自动回滚。
+
+D.使用AWS CloudTrail监视由AWS账户中的CodeDeploy或代表CodeDeploy进行的API调用。部署失败时发送Amazon SNS消息。使用AWS CLI重新部署先前部署的修订。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+A
+
+https://docs.aws.amazon.com/zh_cn/codedeploy/latest/userguide/monitoring-cloudwatch-events.html
+
+
+问题＃63主题1
+
+公司的应用程序具有可预测的高峰流量时间。该公司希望仅在高峰时段扩大应用程序实例。该应用程序将状态存储在Amazon DynamoDB中。应用程序环境使用标准的Node.js应用程序堆栈和存储在私有Git存储库中的自定义Chef配方。
+哪种解决方案最具成本效益，并且在执行应用程序环境的滚动更新时需要最少的管理开销？
+
+A.使用Chef食谱在Node.js环境和应用程序堆栈中创建自定义AMI。在Auto Scaling组中使用AMI并设置所需时间的计划缩放，然后设置一个Amazon EC2 IAM角色，该角色提供访问DynamoDB的权限。
+
+B.根据官方的Node.js Docker镜像创建一个使用Chef食谱编写应用程序环境的Docker文件。创建一个Amazon ECS集群和一个用于应用程序环境的服务，然后基于此Docker映像创建一个任务。使用计划的缩放比例在适当的时间缩放容器，并附加一个任务级别的IAM角色，该角色提供访问DynamoDB的权限。
+
+C.配置AWS OpsWorks堆栈并使用自定义Chef食谱。添加用于存储自定义配方的Git存储库信息，并在OpsWorks中为Node.js应用程序服务器添加一个层。然后在部署步骤中配置自定义配方以部署应用程序。配置基于时间的实例，并附加一个提供访问DynamoDB权限的Amazon EC2 IAM角色。
+
+D.配置AWS OpsWorks堆栈，并将自定义配方推送到Amazon S3存储桶，并配置自定义配方以指向S3存储桶。然后为标准Node.js应用程序服务器添加应用程序层类型，并配置自定义配方，以在S3存储桶的部署步骤中部署应用程序。配置基于时间的实例，并附加一个提供访问DynamoDB权限的Amazon EC2 IAM角色。
+
+
+
+
+C
+
+问题#＃64主题1
+
+在线零售商的开发团队已转向业务支持，并希望利用AWS Health Dashboard和AWS Health API来自动执行针对AWS资源运行状况问题的补救措施。 第一个用例是响应AWS检测到公共代码存储库站点上列出的IAM访问密钥。 自动响应将是删除IAM访问密钥并将通知发送给安全团队。
+应该如何实现？
+
+
+A.创建一个AWS Lambda函数以删除IAM访问密钥。将AWS CloudTrail日志发送到AWS CloudWatch日志。通过两个操作为AWS_RISK_CREDENTIALS_EXPOSED事件创建CloudWatch Logs指标过滤器：首先，运行Lambda函数；其次，使用Amazon SNS向安全团队发送通知。
+
+B.创建一个AWS Lambda函数以删除IAM访问密钥。通过两个操作为更改aws.health和AWS_RISK_CREDENTIALS_EXPOSED事件创建一个AWS Config规则：首先，运行Lambda函数；其次，使用Amazon SNS向安全团队发送通知。
+
+C.使用AWS Step Functions创建一个删除IAM访问密钥的函数，然后使用Amazon SNS将通知发送给安全团队。为AWS_RISK_CREDENTIALS_EXPOSED事件创建一个AWS Personal Health Dashboard规则;将“个人健康信息中心”规则的目标设置为“步骤功能”。
+
+D.使用AWS Step Functions创建一个删除IAM访问密钥的函数，然后使用Amazon SNS向安全团队发送通知。使用aws.health事件源和AWS_RISK_CREDENTIALS_EXPOSED事件创建Amazon CloudWatch Events规则，将CloudWatch Events规则的目标设置为Step Functions。
+ 
+
+
+
+
+
+
+
+D
+https://aws.amazon.com/cn/blogs/compute/automate-your-it-operations-using-aws-step-functions-and-amazon-cloudwatch-events/
+
+
+问题#＃77主题1
+
+在为使用AWS API Gateway的新应用程序提供了可行的概念证明后，开发人员必须为该项目设置团队开发环境。 由于时间紧迫，开发人员希望尽量减少在基础架构设置上花费的时间，并希望重用为概念验证而创建的代码存储库。 当前，所有源代码都存储在AWS CodeCommit中。
+公司政策要求具有单独的Jenkins服务器的alpha，beta和生产阶段，以构建代码并针对每个阶段运行测试。
+开发经理必须能够随时阻止管理员之间的代码传播。 安全团队希望确保未经授权，用户将无法修改环境。
+如何做到这一点？
+
+A.创建API网关的alpha，beta和生产阶段。创建一个CodeCommit触发器，以使用AWS Lambda函数将代码部署到不同阶段。
+
+B.创建API网关的alpha，beta和生产阶段。创建一个从CodeCommit存储库中提取代码的AWS CodePipeline。创建CodePipeline操作以将代码部署到API Gateway阶段。
+
+C.为Amazon EC2实例上的alpha，beta和生产阶段创建Jenkins服务器。创建多个CodeCommit触发器，以使用AWS Lambda函数将代码部署到不同阶段。
+
+D.创建一个从CodeCommit存储库中提取代码的AWS CodePipeline管道。使用CodePipeline上的Jenkins服务器创建alpha，beta和生产阶段。
+ 
+
+
+
+
+
+
+
+
+D
+问题#＃78主题1
+
+一家在线公司广泛使用Amazon EC2 Auto Scaling，以提供出色的客户体验，同时最大程度地减少正在运行的EC2实例的数量。公司在应用程序层中的自托管Puppet环境管理实例的配置。 IT经理希望获得最低的许可成本，并希望确保每当EC2 Auto Scaling组按比例缩小时，已删除的EC2实例都将尽快从Puppet主服务器中注销。
+如何满足要求？
+
+A. 在实例启动时，使用EC2用户数据来部署AWS CodeDeploy代理。使用CodeDeploy安装Puppet代理。当Auto Scaling组向外扩展时，运行脚本以将新部署的实例注册到Puppet主服务器。当Auto Scaling组扩大时，请使用EC2 Auto Scaling生命周期挂钩来触发从Puppet主服务器取消注册。 EC2_INSTANCE_TERMINATING
+
+B.将AWS CodeDeploy代理烘烤到基本AMI中。当Auto Scaling组向外扩展时，请使用CodeDeploy安装Puppet代理，并执行脚本将新部署的实例注册到Puppet主服务器。当Auto Scaling组扩大时，请使用CodeDeploy ApplicationStop生命周期挂钩运行脚本以从Puppet主服务器注销实例。
+
+C.在实例启动时，使用EC2用户数据来部署AWS CodeDeploy代理。当Auto Scaling组向外扩展时，请使用CodeDeploy安装Puppet代理，并运行脚本将新部署的实例注册到Puppet主服务器。当Auto Scaling组扩大时，请使用EC2用户数据实例停止脚本运行脚本以从Puppet主服务器注销该实例。
+
+D.将AWS Systems Manager代理烘烤到基本AMI中。当Auto Scaling组向外扩展时，请使用AWS Systems Manager安装Puppet代理，然后运行脚本以将新部署的实例注册到Puppet主数据库。当Auto Scaling组扩大时，请使用Systems Manager实例停止生命周期挂钩来运行脚本以从Puppet主服务器注销该实例。
+ 
+
+
+
+
+
+
+
+
+A?D
+
+
+
+问题#＃84主题1
+
+一家医疗保健公司在AWS中运行着一个关键应用程序。最近，该公司经历了一些停机时间。如果再次发生，该公司需要能够在另一个AWS区域中恢复其应用程序。该应用程序使用Elastic Load Balancing和Amazon EC2实例。该公司还维护包含其应用程序的自定义AMI。该AMI经常更改。
+除非区域服务中断，否则工作量需要在主要区域中运行，在这种情况下，流量应故障转移到新区域。
+另外，第二区域的成本需要低。 RTO是2小时。
+哪种解决方案可以在发生故障时使公司故障转移到另一个地区并满足上述要求？
+
+A.从备份区域的主要区域维护AMI的副本。使用包含复制的AMI的启动配置，使用一个实例创建一个Auto Scaling组。根据需要，使用Amazon Route 53记录在发生故障时将流量定向到备份区域中的负载均衡器。允许Auto Scaling组在故障期间根据需要扩展。
+
+B.自动将主要区域中的AMI复制到备份区域。生成一个AWS Lambda函数，该函数将从AMI创建EC2实例并将其放置在负载均衡器之后。使用相同的Lambda函数，将Amazon Route 53记录指向备份区域中的负载均衡器。发生故障时触发Lambda函数。
+
+C.将AMI放在复制的Amazon S3存储桶中。生成可以创建启动配置并将其分配给已创建的Auto Scaling组的AWS Lambda函数。在此Auto Scaling组中有一个实例准备接受traffi
+C.发生故障时触发Lambda函数。使用Amazon Route 53记录并使用相同的Lambda函数对其进行修改，以指向备份区域中的负载均衡器。
+
+D.自动将AMI复制到备份区域。创建可以创建启动配置并将其分配给已创建的Auto Scaling组的AWS Lambda函数。将Auto Scaling组的最大大小设置为0，并仅在出现故障时使用Lambda函数增加它。发生故障时触发Lambda函数。使用Amazon Route 53记录并使用相同的Lambda函数对其进行修改，以指向备份区域中的负载均衡器。
+ 
+
+
+
+
+
+
+
+
+
+
+D
+
+
+问题#＃86主题1
+
+公司在开发环境中的单个Amazon EC2实例上运行数据库。数据存储在附加到EC2实例的单独的Amazon EBS卷上。 Amazon Route 53 A记录已创建并配置为指向EC2实例。该公司希望在实例或可用区（AZ）发生故障时自动恢复数据库实例。该公司还希望保持低成本。 RTO是4个小时，RPO是12小时。
+DevOps工程师应采用哪种解决方案来满足这些要求？
+
+A.在一个Auto Scaling组中运行数据库，在多个可用区中最小和最大实例数为1。将生命周期挂钩添加到Auto Scaling组，并定义在发生生命周期事件时触发的Amazon CloudWatch Events规则。让CloudWatch Events规则调用AWS Lambda函数，以根据事件从EC2实例分离或附加Amazon EBS数据卷。将EC2实例UserData配置为装入数据卷（尝试以较短的延迟失败后重试），然后启动数据库并更新Route 53记录。
+
+B.在不同的可用区中的两个单独的EC2实例上运行数据库，一个实例处于活动状态，另一个实例作为备用数据库。将数据卷附加到活动实例。配置Amazon CloudWatch Events规则以在EC2实例终止时调用AWS Lambda函数。 Lambda函数将启动替换EC2实例。如果终止的实例是活动节点，则该函数会将数据卷附加到备用节点。启动数据库并更新Route 53记录。
+
+C.在一个Auto Scaling组中运行数据库，在多个可用区中最小和最大实例数为1。每隔4小时创建一个由计划的Amazon CloudWatch Events规则触发的AWS Lambda函数，以拍摄数据卷的快照并应用标签。让实例UserData获取最新快照，从中创建一个新卷，然后附加并装入该卷。然后启动数据库并更新Route 53记录。
+
+D.在不同的可用区中的两个单独的EC2实例上运行数据库。将一个实例配置为主实例，将另一个实例配置为备用实例。设置主实例和备用实例之间的复制。将Route 53记录指向主记录。配置Amazon CloudWatch Events规则以在EC2实例终止时调用AWS Lambda函数。 Lambda函数将启动替换EC2实例。如果终止的实例是活动节点，则该功能将备用节点提升为主节点，并将Route 53记录指向该节点。
+ 
+
+
+
+
+
+
+
+
+C
+
+问题#＃94主题1
+
+一家公司在其生产环境中运行一个三层Web应用程序，该应用程序基于单个AWS CloudFormation模板构建，该模板由ELB Application Load Balancer之后的Amazon EC2实例组成。实例在多个可用区中的EC2 Auto Scaling组中运行。数据存储在具有只读副本的Amazon RDS Multi-AZ数据库实例中。 Amazon Route 53管理应用程序的公共DNS记录。当新应用软件发生软件转换时，DevOps工程师必须创建工作流来通过回退生产环境中的更改来减轻失败的软件部署。
+工程师应采取哪些步骤来以最少的停机时间来满足这些要求？
+
+A.使用CloudFormation部署其他暂存环境，并使用加权记录配置Route 53 DNS。在切换过程中，更改Route 53 A的记录权重，以在两个环境之间实现均匀的流量分配。验证新环境中的流量，如果测试成功，则立即终止旧环境。
+
+B.使用单个AWS Elastic Beanstalk环境来部署登台和生产环境。通过上载具有新应用程序代码的ZIP文件来更新环境。交换Elastic Beanstalk环境CNAME。验证新环境中的流量，如果测试成功，则立即终止旧环境。
+
+C.使用单个AWS Elastic Beanstalk环境和AWS OpsWorks环境来部署登台和生产环境。通过将带有新应用程序代码的ZIP文件上载到与OpsWorks堆栈一起部署的Elastic Beanstalk环境中来更新环境。验证新环境中的流量，如果测试成功，则立即终止旧环境。
+
+D.使用AWS CloudFormation部署其他登台环境，并使用加权记录配置Route 53 DNS。 在转换期间，随着工作负载已成功验证，请增加权重分配以将更多流量定向到新的登台环境。 保留旧的生产环境，直到新的暂存环境处理所有流量为止。
+
+
+
+
+
+
+
+
+
+D
+
+问题#＃96主题1
+
+一家公司希望使用Amazon ECS提供Docker容器运行时环境。出于合规性原因，必须对ECS集群中使用的所有Amazon EBS卷进行加密。将对群集实例进行滚动更新，并且公司希望实例在终止之前耗尽所有任务。
+如何满足这些要求？ （选择两个。）
+
+A.修改默认的ECS AMI用户数据以创建一个脚本，该脚本对所有正在运行的容器实例执行docker rm“” f {id}。将脚本复制到/etc/ init.d/rc.d目录并执行chconfig，以使脚本在操作系统关闭期间运行。
+
+B.使用AWS CodePipeline构建一个管道，该管道发现最新的Amazon提供的ECS AMI，然后将映像复制到加密的AMI，输出加密的AMI ID。部署群集时，请使用加密的AMI ID。
+
+C.复制ECS用于部署集群实例的默认AWS CloudFormation模板。修改模板资源EBS配置设置以设置“〜Encrypted：True”，并包括AWS KMS别名：“〜aws / ebs”以加密AMI。
+
+D.创建一个由AWS Lambda函数支持的Auto Scaling生命周期挂钩，该函数使用AWS开发工具包将终止实例标记为DRAINING。在实例上的运行任务为零之前，请阻止生命周期挂钩完成。
+
+E.创建一个允许操作ECS :: EncryptedImage的IAM角色。配置AWS CLI和配置文件以使用此角色。使用AWS CLI启动集群，为create-cluster ECS命令提供--use-encrypted-image和--kms-key参数。
+ 
+
+
+
+
+
+
+
+
+CD
+
+
+问题#＃97主题1
+
+一个政府机构拥有多个AWS账户，其中许多存储敏感的公民信息。安全团队希望检测任何帐户中的异常帐户和网络活动（例如SSH暴力攻击），并将该信息集中在专用的安全帐户中。事件信息应存储在安全帐户中的Amazon S3存储桶中，并由部门的安全信息和甚至管理器（SIEM）系统监视。
+如何做到这一点？
+
+A.在每个帐户中启用Amazon Macie。使用邀请/接受将安全帐户配置为每个成员帐户的Macie Administrator。在安全帐户中创建一个Amazon CloudWatch Events规则，以将所有调查结果发送到Amazon Kinesis Data Firehouse，后者应将调查结果推送到S3存储桶。
+
+B.仅在安全帐户中启用Amazon Macie。使用邀请/接受将安全帐户配置为每个成员帐户的Macie管理员。在安全帐户中创建一个Amazon CloudWatch Events规则，以将所有发现发送到Amazon Kinesis Data Streams。使用KCL进行写入和应用程序以从Kinesis Data Streams中读取数据并写入S3存储桶。
+
+C.在每个帐户中启用Amazon GuardDuty。使用邀请/接受将安全帐户配置为每个成员帐户的GuardDuty管理员。在安全帐户中创建一个Amazon CloudWatch规则，以将所有发现发送到Amazon Kinesis Data Firehouse，这会将发现发送到S3存储桶。
+
+D.仅在安全帐户中启用Amazon GuardDuty。使用邀请/接受将安全帐户配置为每个成员帐户的GuardDuty管理员。在安全帐户中创建一个Amazon CloudWatch规则，以将所有发现发送到Amazon Kinesis Data Streams。使用KCL进行写入和应用程序以从Kinesis Data Streams中读取数据并写入S3存储桶。
+ 
+
+
+
+
+
+
+
+
+C?D
+
+
+问题#＃100主题1
+
+DevOps工程师需要为Amazon EFS设计和实施备份机制。工程师具有以下要求：
+✑备份应按计划运行。
+✑如果备份窗口过期，则应停止备份。
+✑如果在备份窗口之前完成备份，则应停止备份。
+✑应保留备份日志以进行进一步分析。
+✑设计应支持高度可用和容错的范例。
+✑应将备份元数据通知管理员。
+
+哪种设计可以满足这些要求？
+
+A.将AWS Lambda与Amazon CloudWatch Events规则一起使用以安排备份活动的开始/停止。在Auto Scaling组中的Amazon EC2上运行备份脚本。在EC2上使用Auto Scaling生命周期挂钩和SSM Run命令将备份日志上传到Amazon S3。使用Amazon SNS通知管理员备份活动metadat
+一种。
+
+B.将Amazon SWF与Amazon CloudWatch Events规则一起使用，以安排备份活动的开始/停止。在Auto Scaling组中的Amazon EC2上运行备份脚本。在EC2上使用Auto Scaling生命周期挂钩和SSM Run命令将备份日志上传到Amazon Redshift。使用CloudWatch Alarms通知管理员备份活动metadat
+一种。
+
+C.将AWS Data Pipeline与Amazon CloudWatch Events规则一起使用以安排备份活动的开始/停止。在单个可用区中的Amazon EC2上运行备份脚本。在EC2上使用Auto Scaling生命周期挂钩和SSM Run命令将备份日志上传到Amazon RDS。使用Amazon SNS通知管理员备份活动metadat
+一种。
+
+D.将AWS CodePipeline与Amazon CloudWatch Events规则一起使用以安排备份活动的开始/停止。在单个可用区中的Amazon EC2上运行备份脚本。在Amazon EC2上使用Auto Scaling生命周期挂钩和SSM Run命令将备份日志上传到Amazon S3。使用Amazon SES通知管理员备份活动metadat
+一种。
+ 
+
+
+
+
+
+
+
+A
+
+问题#＃101主题1
+
+一家快速发展的公司希望满足开发人员对AWS开发环境的需求。开发环境是在
+AWS管理控制台。网络团队使用AWS CloudFormation来管理网络基础架构，为
+Amazon VPC和所有子网。开发环境具有通用标准，例如应用程序负载平衡器，Amazon EC2 Auto Scaling组，安全组和Amazon DynamoDB表。
+为了满足需求，DevOps工程师希望自动化创建开发环境。由于支持该应用程序所需的基础结构预计会增长，因此必须有一种轻松更新已部署基础结构的方法。 CloudFormation将用于为开发环境创建模板。
+哪种方法可以满足这些要求并快速为开发人员提供一致的AWS环境？
+
+A.在模板的“资源”部分中使用Fn：ImportValue内在函数来检索虚拟私有云（VPC）和子网值。将CloudFormation StackSet用于开发环境，使用Count输入参数指示所需的环境数。使用命令来更新现有的开发环境。 UpdateStackSet
+
+B.使用嵌套堆栈来定义通用的基础架构组件。要访问导出的值，请使用TemplateURL引用网络团队的模板。要检索虚拟私有云（VPC）和子网值，请使用主模板的“参数”部分中的Fn :: ImportValue内在函数。使用CreateChangeSet和ExecuteChangeSet命令来更新现有的开发环境。
+
+C.使用嵌套堆栈来定义通用的基础架构组件。将Fn :: ImportValue内部函数与嵌套堆栈的资源一起使用，以检索虚拟私有云（VPC）和子网值。使用CreateChangeSet和ExecuteChangeSet命令来更新现有的开发环境。
+
+D.在主模板的“参数”部分中使用Fn：ImportValue内在函数来检索虚拟私有云（VPC）和子网值。按照需要在CloudFormation嵌套堆栈中创建开发资源的顺序定义开发资源。使用CreateChangeSet和ExecuteChangeSet命令来更新现有的开发环境。
+ 
+
+
+
+
+
+
+
+
+C
+
+问题#＃103主题1
+
+DevOps工程师正在启动一个新应用程序，它将使用Amazon Route 53，应用程序负载平衡器，Auto Scaling和Amazon DynamoDB进行部署。 此次发布的关键要求之一是应用程序必须能够扩展以满足突然增加的负载。 在低使用期间，基础架构组件必须按比例缩小以优化成本。
+DevOps工程师可以采取哪些步骤来满足要求？ （选择两个。）
+
+A.使用AWS Trusted Advisor为基础架构将使用的Amazon EC2实例提交限制增加请求。
+
+B.通过利用AWS Trusted Advisor确定需要提高哪个Amazon EC2实例限制，并向AWS支持提交请求以增加这些限制。
+
+C.为应用程序使用的DynamoDB表启用Auto Scaling。
+
+D.将应用程序负载平衡器配置为根据当前负载自动调整目标组。
+
+E.创建一个每5分钟运行一次的Amazon CloudWatch Events调度规则，以跟踪Auto Scaling组的当前使用情况。如果用法已更改，则触发放大事件以调整容量。对DynamoDB读写容量执行相同的操作。
+ 
+
+
+
+
+
+BC
+We need to check limits and enable autoscaling for dynamo db For B - https://aws.amazon.com/blogs/mt/monitoring-service-limits-with-trusted-advisor-and-amazon-cloudwatch/ For C - https://aws.amazon.com/blogs/database/amazon-dynamodb-auto-scaling-performance-and-cost-optimization-at-any-scale/
+
+
+问题#＃104主题1
+
+一家公司使用AWS Elastic Beanstalk托管基于Python的应用程序的部分。使用Elastic Beanstalk CLI创建和更新环境。 Operations团队发现其中一种Elastic Beanstalk环境中的请求增加，导致夜间停机。团队注意到，用于AWS Auto Scaling的策略是NetworkOut。基于负载测试指标，团队确定应用程序需要扩展CPU利用率以提高环境的弹性。团队希望在所有环境中自动实现这一点。
+按照AWS的建议，应如何实现这种自动化？
+
+A.使用ebextensions，在container_commands项中放置一个命令以执行API调用，以将缩放度量标准修改为Auto Scaling配置的CPUUtilization。使用leader_only仅在环境中启动的第一个实例中执行此命令。
+
+B.使用ebextensions，创建一个自定义资源，该资源可修改AWSEBAutoScalingScaleUpPolicy和AWSEBAutoScalingScaleDownPolicy资源，以将CPUUtilization用作衡量Auto Scaling组规模的指标。
+
+C.使用ebextensions，在aws：autoscaling：trigger命名空间中将MeasureName的选项设置配置为CPUUtilization。
+
+D.使用ebextensions，将脚本放置在files密钥中，并将其放置在/ opt / elasticbeanstalk / hooks / appdeploy / pre中，以执行API调用，以将缩放度量标准修改为Auto Scaling配置的CPUUtilization。使用leader_only将此脚本仅放置在环境中启动的第一个实例中。
+ 
+
+
+
+
+
+
+
+
+C
+
+
+https://aws.amazon.com/cn/premiumsupport/knowledge-center/elastic-beanstalk-scaling-triggers/
+
+
+问题#＃109主题1
+
+拥有大型本地OpenStack环境的公司的管理团队希望将非生产工作负载转移到AWS。一个AWS Direct
+已设置连接连接并将其配置为连接环境。由于有合同义务，生产工作负载必须保留在本地，并且在下一次合同谈判之后将转移到AWS。该公司遵循Internet安全中心（CIS）的标准来强化图像。此配置是使用公司的配置管理系统开发的。
+哪种解决方案可以在AWS环境中自动创建相同的映像而又不会产生大量开销？
+
+A.编写一个将创建Amazon EC2实例的AWS CloudFormation模板。使用cloud-unit安装配置管理代理，使用cfn-wait等待配置管理成功应用，并使用AWS Lambda支持的自定义资源创建AMI。
+
+B.登录到控制台，启动Amazon EC2实例，然后安装配置管理代理。通过配置管理系统应用更改后，登录到控制台并从实例创建新的AMI。
+
+C.创建一个新的AWS OpsWorks层并镜像图像强化标准。将此层用作所有AWS工作负载的基准。
+
+D.在配置管理系统中进行更改时，将触发Jenkins中的作业，以使用VM Import命令在Amazon VPC中创建Amazon EC2实例。使用生命周期挂钩启动AWS Lambda函数以创建AMI。
+ 
+
+
+
+
+
+
+
+
+D
+问题#＃110主题1
+
+DevOps工程师正在编写一个AWS CloudFormation模板，以站立将在ELB应用程序负载均衡器后面的私有子网中的Amazon EC2实例上运行的Web服务。 工程师必须确保该服务可以接受来自具有IPv6地址的客户端的请求。
+工程师应将哪些配置项合并到CloudFormation模板中，以允许IPv6客户端访问Web服务？
+
+A.将IPv6 CIDR块与EC2实例将驻留的Amazon VPC和子网相关联。为IPv6网络创建路由表条目，使用支持IPv6的EC2实例类型，并为每个EC2实例分配IPv6地址。
+
+B.用网络负载平衡器替换应用程序负载平衡器。将IPv6 CIDR块与网络负载平衡器所在的虚拟私有云（VPC）和子网相关联，并为网络负载平衡器分配一个IPv6弹性IP地址。
+
+C.为每个EC2实例分配一个IPv6弹性IP地址。创建目标组并将EC2实例添加为目标。在应用程序负载平衡器的端口443上创建一个侦听器，并将新创建的目标组关联为默认目标组。
+
+D.创建一个目标组并将EC2实例添加为目标。在应用程序负载平衡器的端口443上创建一个侦听器。将新创建的目标组关联为默认目标组。选择一个双堆栈IP地址，然后在安全组中创建一个规则，以允许来自任何位置的入站流量。
+ 
+
+
+
+
+
+
+
+
+D
+问题#＃111主题1
+
+安全团队担心开发人员可能无意中将弹性IP地址附加到生产中的Amazon EC2实例。不允许任何开发人员将弹性IP地址附加到实例。如果任何生产服务器随时都有弹性IP地址，则必须通知安全团队。
+该任务如何自动化？
+
+A.使用Amazon Athena查询AWS CloudTrail日志以检查是否有任何关联地址尝试。创建一个AWS Lambda函数，以从实例中分离弹性IP地址，并向安全团队发出警报。
+
+B.将IAM策略附加到开发人员的IAM组以拒绝关联地址权限。创建自定义AWS Config规则以检查弹性IP地址是否与任何标记为生产的实例相关联，并向安全团队发出警报。
+
+C.确保所有与开发人员关联的IAM组都没有关联地址权限。创建一个计划的AWS Lambda函数以检查弹性IP地址是否与任何标记为生产的实例相关联，并在实例具有与其相关联的弹性IP地址时通知安全团队。
+
+D.创建一个AWS Config规则以检查所有生产实例是否具有包含拒绝关联地址权限的EC2 IAM角色。验证是否有与任何实例关联的弹性IP地址，并在实例具有与其关联的弹性IP地址时通知安全团队。
+ 
+
+
+
+
+
+
+
+
+B
+
+D is wrong because it wouldn't stop developers being able to attach the EIPs.
+
+问题#＃115主题1
+
+一家公司正在审查其IAM政策。 DevOps工程师编写的一项策略被标记为过于宽松。 AWS Lambda函数使用该策略，该函数在周末向标记有Environment：NonProduction（非生产）的Amazon EC2实例发出停止命令。当前的政策是：
+
+工程师应进行哪些更改以实现最小许可政策？ （选择三个。）
+
+
+A.
+
+
+B．
+
+
+C。
+
+
+D．
+
+
+E．
+
+
+
+
+
+
+
+BDE
+问题#＃116主题1
+
+用于医疗保健服务的Web应用程序在ELB应用程序负载均衡器后面的Amazon EC2实例上运行。 实例在多个可用区中的Amazon EC2 Auto Scaling组中运行。 DevOps工程师必须创建一种机制，在该机制中可以从生产中删除EC2实例，以便可以分析其系统日志中的问题以快速排除Web层上的问题。
+工程师如何在确保可用性并最大程度地减少停机时间的同时完成此任务？
+
+A.实施EC2 Auto Scaling组冷却时间。使用EC2实例元数据来确定实例状态，并使用AWS Lambda函数对Amazon EBS卷进行快照以保留系统日志。
+
+B.实施Amazon CloudWatch Events规则。创建一个可以对实例终止做出反应的AWS Lambda函数，以部署CloudWatch Logs代理以上传系统并访问日志到Amazon S3以进行分析。
+
+C.手动终止EC2实例。 Auto Scaling服务将在实例终止之前将所有日志信息上传到CloudWatch Logs进行分析。
+
+D.使用生命周期挂钩实现EC2 Auto Scaling组。创建一个AWS Lambda函数，该函数可以将EC2实例生命周期挂钩修改为待机状态，通过远程脚本执行从实例中提取日志，并将其放置在Amazon S3存储桶中以进行分析。
+ 
+
+
+
+
+
+
+
+
+
+
+D
+
+https://docs.aws.amazon.com/zh_cn/autoscaling/ec2/userguide/lifecycle-hooks.html
+
+
+
+
+
+
+问题＃122主题1
+
+DevOps工程师使用Docker容器技术来构建图像分析应用程序。该应用程序经常会看到流量高峰。工程师必须根据客户需求自动扩展应用程序，同时保持成本效益并最大程度地降低对可用性的影响。
+在满足其他要求的同时，如何使FASTEST响应流量高峰？
+
+A.使用Auto Scaling组中的容器实例创建Amazon ECS集群。将ECS服务配置为使用服务自动扩展。设置Amazon CloudWatch警报以扩展ECS服务和集群。
+
+B.在AWS Elastic Beanstalk多容器Docker环境上部署容器。配置Elastic Beanstalk以根据Amazon CloudWatch指标自动扩展环境。
+
+C.使用竞价型实例(Spot instances)创建Amazon ECS集群。将ECS服务配置为使用服务自动扩展。设置Amazon CloudWatch警报以扩展ECS服务和集群。
+
+D.在Amazon EC2实例上部署容器。部署容器调度程序以将容器调度到EC2实例上。根据可用的Amazon CloudWatch指标为EC2实例配置EC2自动扩展。
+
+
+
+
+
+
+A
+Spot instances:https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/using-spot-instances.html
+
+
+https://aws.amazon.com/cn/blogs/compute/automatic-scaling-with-amazon-ecs/
+
+
+问题＃124主题1
+一家公司开始迁移到AWS云。内部客户根据其AWS技能分为两类：初学者和专家。
+DevOps工程师需要构建一个解决方案，以允许初学者部署一组受限的AWS架构蓝图，这些蓝图表示为AWS CloudFormation模板。只能在预定的虚拟私有云（VPC）上进行部署。但是，专家用户应该能够不受限制地部署蓝图。专家还应能够根据需要访问其他AWS服务。
+工程师如何才能以最少的开销实现满足这些要求的解决方案？
+
+A.将约束应用于模板中的参数，从而限制可用于部署的VPC。将模板存储在Amazon S3上。为初学者创建一个IAM组，并授予他们访问模板和CloudFormation的权限。为专家创建一个单独的组，使他们可以访问模板，CloudFormation和其他AWS服务。
+
+B.将模板存储在Amazon S3上。使用AWS Service Catalog创建基于这些模板的产品组合。通过限制可用于部署的VPC的规则，将模板约束应用于产品。为初学者创建一个IAM组，使他们可以访问作品集。为专家创建一个单独的组，使他们可以访问模板，CloudFormation和其他AWS服务。
+
+C.将模板存储在Amazon S3上。使用AWS Service Catalog创建基于这些模板的产品组合。创建IAM角色，限制可用于创建AWS资源的VPC。使用此角色将启动约束应用于产品。为初学者创建一个IAM组，使他们可以访问作品集。为专家创建一个单独的组，使他们可以访问产品组合和其他AWS服务。
+
+D.为每个体系结构蓝图创建两个模板，其中只有一个模板限制了可用于部署的VPC。将模板存储在Amazon DynamoDB中。为初学者创建一个IAM组，使他们可以访问受限模板和CloudFormation。为专家创建一个单独的组，使他们可以访问不受限制的模板，CloudFormation和其他AWS服务。
+
+
+
+
+
+
+B
+
+https://docs.aws.amazon.com/servicecatalog/latest/adminguide/reference-template_constraint_rules.html
+
+问题＃125主题1
+尝试使用AWS CloudFormation模板创建Amazon ECS集群时，DevOps工程师遇到以下错误：
+调用CreateStack操作时发生错误（InsufficientCapabilitiesException）。
+是什么导致此错误，需要采取什么步骤才能使工程师成功执行AWS CloudFormation模板？
+
+A. 尝试执行CloudFormation模板的AWS用户或角色没有在模板中创建资源所需的权限。工程师必须查看用户策略，并添加创建资源所需的任何权限，然后重新运行模板执行。
+
+B.无法访问AWS CloudFormation服务，并且无法创建集群。工程师需要确认路由和防火墙规则不会阻止AWS CloudFormation脚本与AWS服务终端进行通信，然后重新运行模板执行。
+
+C. CloudFormation执行未获得创建IAM资源的能力。工程师需要提供CAPABILITY_IAM和作为CloudFormation执行参数中的功能，或者提供AWS Management Console中的功能。 CAPABILITY_NAMED_IAM
+
+D. CloudFormation无法满足当前AWS区域中指定资源的请求。工程师需要指定一个新区域并重新运行模板。
+
+
+
+
+
+
+
+C
+
+
+
+
+
+
+问题＃130主题1
+DevOps工程师必须每周自动执行一次过程，以在AWS账户中的所有用户中按用户识别不必要的权限。此过程应通过检查用户附加的IAM访问策略与用户在过去90天内实际使用的权限进行比较，评估当前授予每个用户的权限。比较中的任何差异都表明该用户具有比所需权限更多的权限。应将增量报告发送给信息安全团队，以供进一步检查和根据需要对IAM用户访问策略进行修订。
+
+哪种解决方案是完全自动化的，并且将生成MOST详细的增量报告？
+
+A.创建一个AWS Lambda函数，该函数调用IAM Access Advisor API来提取针对AWS账户中所有用户的逐个用户授予的服务权限。确保为Access Advisor配置的跟踪期为90天。每周使用Amazon CloudWatch Events规则调用Lambda函数。对于每个记录，按用户，按服务，如果Access Advisor的“上次访问”字段指示的是天数，而不是“跟踪期间未访问”，则表示与用户当前附加的访问策略相比的增量。 Lambda遍历AWS账户中的所有用户后，对其进行配置以生成报告并使用Amazon SES发送该报告。
+
+B.配置一个跨越所有AWS区域和所有读/写事件的AWS CloudTrail跟踪，并将该跟踪指向Amazon S3存储桶。创建Amazon Athena表，并在CREATE TABLE查询中指定S3存储桶ARN。创建一个使用SDK来访问Athena表的AWS Lambda函数，该函数执行SELECT，并确保WHERE子句包含userIdentity，eventName和eventTime。将结果与用户当前附加的IAM访问策略进行比较，以确定任何增量。配置Amazon CloudWatch Events时间表以自动执行此过程，使其每周运行一次。配置Amazon SES以将合并报告发送给信息安全团队。
+
+C.在所有区域中所有VPC的所有子网上配置VPC流日志，以捕获整个帐户中的用户流量。确保将所有日志发送到集中式Amazon S3存储桶，以便可以合并和聚合所有流日志。创建一个由Amazon CloudWatch Events时间表每周触发一次的AWS Lambda函数。确保Lambda函数解析流日志文件以获取以下信息：IAM用户ID，子网ID，VPC ID，每个API调用的允许/拒绝状态以及服务名称。然后使该函数按用户确定增量。配置Lambda函数以使用Amazon SES发送合并的报告。
+
+D.创建一个Amazon ES集群并记下其端点URL，该URL将作为环境变量提供给Lambda函数。在AWS CloudTrail追踪目标S3存储桶上配置Amazon S3事件，并确保将事件配置为发送给Lambda函数。创建Lambda函数以使用事件，从JSON解析输入，并将其转换为Amazon ES文档格式。通过传入的环境变量将文档发布到Amazon ES集群的终端节点。确保Amazon ES中存在正确的索引编制，并使用Apache Lucene查询逐个用户地解析权限。将增量导出到报告中，并让Amazon ES每周使用Amazon SES将报告发送给信息安全团队。
+ 
+
+
+
+
+
+
+
+A
+https://aws.amazon.com/cn/blogs/security/automate-analyzing-permissions-using-iam-access-advisor/
+
+
+问题＃134主题1
+应用程序正在Amazon EC2上运行。它具有附加的IAM角色，在尝试访问AWS Systems Manager参数存储中的SecureString参数资源时收到AccessDenied错误。 SecureString参数使用客户管理的客户主密钥（CMK）加密，
+DevOps工程师应该采取什么步骤来授予对角色的访问权限，同时授予最小的特权？ （选择三个。）
+
+A.在实例角色的IAM策略中为参数资源设置ssm：GetParamter。
+
+B.为客户管理的CMK策略中的实例角色设置kms：Decrypt。
+
+C.在角色的IAM策略中为客户管理的CMK资源设置kms：Decrypt。
+
+D.在实例角色IAM策略中为参数资源设置ssm：DecryptParameter。
+
+E.在AWS托管的SSM KMS密钥上为用户设置kms：GenerateDataKey。
+
+F.为客户管理的CMK策略中的参数资源设置kms：Decrypt。
+
+
+
+
+
+
+
+
+
+
+ABC
+
+
+
+问题＃136主题1
+一家公司正在使用AWS CodeBuild项目来构建和打包应用程序。程序包将被复制到共享的Amazon S3存储桶，然后再跨多个AWS账户进行部署。
+buildspec.yml文件包含以下内容：
+ 
+DevOps工程师注意到，拥有AWS帐户的任何人都可以下载工件。
+DevOps工程师应采取哪些步骤来阻止这种情况？
+
+A.将post_build修改为命令以使用“” -acl public-read，并配置存储桶策略，该策略仅授予对相关AWS账户的读取访问权限。
+
+B.为S3存储桶配置默认ACL，该ACL将经过身份验证的用户集定义为仅相关的AWS账户，并授予只读访问权限。
+
+C.创建一个S3存储桶策略，该策略授予对相关AWS账户的读取访问权限，并拒绝对主体“ *”的读取访问权限
+
+D.修改post_build命令以删除“ -acl Authenticated-read”并配置存储桶策略，该策略仅允许对相关AWS账户进行读取访问。
+
+
+
+
+
+
+
+
+C/D
+
+问题＃1主题2		137
+公司需要将分布式Web应用程序的自动DNS故障转移引入灾难恢复或备用安装。 DevOps工程师计划将Amazon Route 53配置为在应用程序发生故障时提供DNS路由到备用端点。
+工程师应采取哪些步骤来完成此任务？ （选择两个。）
+
+A.为无法作为别名记录输入的每个终端创建Amazon Route 53健康检查。确保防火墙和路由规则允许Amazon Route 53将请求发送到运行状况检查中指定的端点。
+
+B.创建别名记录，将流量路由到AWS资源，并将“评估目标运行状况”选项的值设置为“是”，然后创建所有非别名记录。
+
+C.创建一个主要的Amazon Route 53记录集，将其设置为故障转移，并将其与主要和辅助Amazon Route 53记录集关联，以将流量分配到正常的DNS条目。
+
+D.创建一个Amazon CloudWatch警报以监视主要的Amazon Route 53 DNS条目。然后创建关联的AWS Lambda函数，以执行对路由53到辅助DNS条目的故障转移API调用。
+ 
+
+
+
+
+
+
+
+
+
+C/D
+
+
+问题＃9主题2				145
+信息安全策略要求在补丁发布后的24小时内，使用关键操作系统安全补丁来修补所有可公开访问的系统。所有实例均使用Patch Group密钥设置为0进行标记。使用自动批准规则，为Windows和Red Hat Enterprise Linux（RHEL）设置了两个新的AWS补丁程序基准，对于严重性严重的安全补丁程序，其零天延迟。修补程序组0已与新的修补程序基准相关联。
+哪两个步骤将自动执行补丁合规性和报告？ （选择两个。）
+ 
+A.创建一个AWS Systems Manager维护窗口，并添加一个补丁程序组0的目标。添加一个以每日时间表运行AWS-InstallWindowsUpdates文档的任务。
+ 
+B.创建带有每日计划的AWS Systems Manager维护窗口，并添加具有补丁程序组0的目标。添加具有运行AWS-RunPatchBaseline文档和Task的任务。
+ 
+C.创建一个AWS Systems Manager状态管理器配置。将AWS-RunPatchBaseline任务与配置相关联，并将目标添加到补丁程序组0。
+ 
+D.创建一个AWS Systems Manager维护窗口，并添加一个补丁程序组0的目标。添加一个任务，该任务以每日时间表运行AWS-ApplyPatchBaseline文档。
+ 
+E.使用AWS Systems Manager运行命令将AWS-ApplyPatchBaseline文档与标记有补丁程序组0的实例相关联。
+
+
+
+
+
+
+
+BC
+ 
+
+问题＃17主题2				153
+DevOps工程师正在研究在AWS中实施图像批处理集群的最便宜方法。该应用程序无法在Docker容器中运行，并且必须在Amazon EC2上运行。批处理作业将检查点数据存储在网络文件系统（NFS）上，并且可以容忍中断。从裸EC2 Amazon Linux映像配置集群软件需要30分钟。
+哪种是最具成本效益的解决方案？
+
+A.将Amazon EFS用于检查点数据。要完成工作，请使用EC2 Auto Scaling组和按需定价模型来临时设置EC2实例。
+
+B.在EC2实例上使用ClusterFS作为检查点数据。要运行批处理作业，请手动配置EC2实例。作业完成后，请手动关闭实例。
+
+C.将Amazon EFS用于检查点数据。使用EC2 Fleet启动EC2竞价型实例，并使用用户数据在启动时配置EC2 Amazon Linux实例。
+
+D.将Amazon EFS用于检查点数据。使用EC2 Fleet启动EC2竞价型实例。创建标准集群AMI，并在创建实例时使用最新的AMI。
+
+
+
+
+
+
+
+
+D
+
+
+
+
+
+
+问题＃21主题2			157
+一家公司正在使用AWS Organizations为其每个部门创建单独的AWS账户。它需要自动执行以下任务：
+>定期用新补丁更新Linux AMI，并生成一个黄金映像
+>以黄金映像安装新版本的Chef代理（如果有）
+>强制在部门帐户中使用新生成的黄金AMI
+哪个选项需要最少的管理开销？
+
+A.编写脚本以从以前的黄金AMI启动Amazon EC2实例，应用补丁更新，安装新版本的Chef代理，生成新的黄金AMI，然后修改AMI权限以仅与共享新映像部门的帐目。
+
+B.使用AWS Systems Manager运行命令首先更新Chef代理，使用Amazon EC2 Systems Manager自动化生成更新的AMI，然后承担IAM角色，以将新的黄金AMI复制到部门的账户中。
+
+C.使用AWS Systems Manager Automation使用先前的映像更新Linux AMI，提供将更新Chef代理的脚本的URL，然后使用AWS Organizations将先前的黄金AMI替换到部门的帐户中。
+
+D.使用AWS Systems Manager Automation从先前的黄金映像更新Linux AMI，提供将更新Chef代理的脚本的URL，然后仅与部门账户共享新生成的AMI。
+
+
+
+
+
+
+
+
+
+D
+
+
+
+问题＃22主题2			158
+公司希望使用AWS CloudFormation自动重新创建其基础架构，作为公司质量保证（QA）管道的一部分。对于每次质量检查运行，必须在一个帐户中创建一个新的VPC，必须将资源部署到VPC中，并且必须针对此新基础结构运行测试。公司政策规定，所有VPC必须与中央管理VPC对等，以允许集中式日志记录。该公司具有现有的CloudFormation模板来部署其VPC和相关资源。
+哪些步骤的组合将以自动化和可重复的方式实现目标？ （选择两个。）
+
+A.创建一个AWS Lambda函数，该函数在进行CreateVpcPeeringConnection API调用时由Amazon CloudWatch Events规则调用。 Lambda函数应检查对等请求的源，接受请求，并更新管理VPC的路由表，以允许流量通过对等连接。
+
+B.在CloudFormation模板中：
+✑调用自定义资源以为VPC和子网生成唯一的VPC CIDR范围。
+ ✑创建与管理VPC的对等连接。 
+✑更新路由表以允许流向管理VPC。
+
+C.在CloudFormation模板中：
+✑使用Fn :: Cidr函数为VPC和子网分配未使用的CIDR范围。 
+✑创建与管理VPC的对等连接。 
+✑更新路由表以允许流向管理VPC。
+
+D.修改CloudFormation模板以包括一个映射对象，该对象包含将在其中部署堆栈的每个帐户的/ 16 CIDR范围列表。
+
+E.使用CloudFormation StackSets使用自定义资源分配唯一的CIDR范围，将VPC和关联的资源部署到多个AWS账户。创建从每个VPC到中央管理VPC的对等连接，并在管理VPC中接受这些连接。
+
+
+
+
+
+
+
+
+AB
+
+
+
+
+
+
+
+
+问题＃26主题2		162
+一家公司已将其基于容器的应用程序迁移到Amazon EKS，并希望建立自动电子邮件通知。
+发送到每个电子邮件地址的通知用于与EXS组件有关的特定活动。该解决方案将包括Amazon SNS主题和一个AWS Lambda函数，以评估传入的日志事件并将消息发布到正确的SNS主题。
+哪种日志记录解决方案将满足这些要求？
+
+A.启用Amazon CloudWatch Logs记录EKS组件。使用Lambda作为订阅供稿目标，为每个组件创建一个CloudWatch订阅过滤器。
+
+B.启用Amazon CloudWatch Logs记录EKS组件。创建链接到触发Lambda的Amazon CloudWatch Events事件的CloudWatch Logs Insights查询。
+
+C.为EKS组件启用Amazon S3日志记录。使用Lambda作为订阅供稿目标，为每个组件配置Amazon CloudWatch订阅过滤器。
+
+D.为EKS组件启用Amazon S3日志记录。使用AWS Lambda作为目标配置S3 PUT对象事件通知。
+
+
+
+
+
+
+
+
+A/B
+
+
+
+
+
+
+。
+
+
+问题＃36主题2			172
+一家公司拥有数千个Amazon EC2实例以及数百个本地虚拟机。开发人员通常会登录到本地系统的控制台以执行故障排除。开发人员想要登录到AWS实例以运行性能工具，但由于缺少中央控制台日志记录系统而无法登录。 DevOps工程师想要确保控制台访问记录在所有系统上。
+哪些步骤组合可以满足这些要求？ （选择两个。）
+
+A.将角色附加到包含适当权限的所有AWS实例。创建一个AWS Systems Manager托管实例激活。在本地计算机上安装和配置Systems Manager代理。
+
+B.启用AWS Systems Manager会话管理器记录到Amazon S3存储桶。指示开发人员仅使用会话管理器连接到系统。
+
+C.启用AWS Systems Manager Session Manager记录到AWS CloudTrail。指示开发人员继续本地的常规登录过程。将会话管理器用于AWS实例。
+
+D.在所有系统上安装和配置Amazon CloudWatch Logs代理。创建一个AWS Systems Manager托管实例激活。
+
+E.在本地和AWS网络之间建立站点到站点VPN连接。设置堡垒实例，以允许开发人员登录到AWS实例。
+
+
+
+
+
+
+
+
+AB
+
+问题＃40主题2			176
+ 
+DevOps工程师正在建立基于容器的体系结构。工程师已决定使用AWS CloudFormation自动置备Amazon ECS集群和Amazon EC2 Auto Scaling组以启动EC2容器实例。在成功创建CloudFormation堆栈后，工程师注意到，即使成功创建了ECS群集和EC2实例并且堆栈完成了创建，EC2实例仍与另一个群集关联。
+DevOps工程师应如何更新CloudFormation模板来解决此问题？
+ 
+A.在AWS :: ECS :: Cluster资源中引用EC2实例，并在AWS :: ECS :: Service资源中引用ECS集群。
+ 
+B.在UserData属性的AWS :: AutoScaling :: LaunchConfiguration资源中引用ECS群集。
+ 
+C.在UserData属性的AWS :: EC2 :: Instance资源中引用ECS集群。
+ 
+D.在AWS :: CloudFormation :: CustomResource资源中引用ECS集群，以触发向适当的ECS集群注册EC2实例的AWS Lambda函数。
+
+
+
+
+
+
+
+
+
+B
+
+the user data within the Launch Configuration of the Auto-scaling group will register new instances w/ the current cluster as they come online.
+
+问题＃41主题2			177
+ 
+一家公司在Amazon ES上为其所有Amazon CloudWatch Logs编制索引，并使用Kibana查看仪表板以获取可行的见解。该公司希望限制用户按用户访问Kibana。
+DevOps工程师可以采取哪些措施来满足此要求？ （选择两个。）
+ 
+A.在Auto Scaling组中创建具有用户身份验证的代理服务器，并将对Amazon ES终端节点的访问限制为Auto Scaling组标签。
+ 
+B.创建一个具有用户身份验证和弹性IP地址的代理服务器，并将Amazon ES终端节点的访问限制为该IP地址。
+ 
+C.使用AWS IAM用户创建代理服务器，并将Amazon ES终端节点的访问限制为IAM用户。
+ 
+D.使用AWS SSO为Kibana提供用户名和密码保护。
+ 
+E.使用Amazon Cognito为Kibana提供用户名和密码保护。
+ 
+ 
+
+
+
+
+
+
+
+
+BE
+Sorry, change to BE because Controlling Access to Kibana Kibana does not natively support IAM users and roles, but Amazon ES offers several solutions for controlling access to Kibana: Enable SAML authentication for Kibana. Use fine-grained access control with HTTP basic authentication. Configure Amazon Cognito Authentication for Kibana. For public access domains, configure an IP-based access policy, with or without a proxy server. For VPC access domains, use an open access policy, with or without a proxy server, and security groups to control access. To learn more, see About Access Policies on VPC Domains.
+
+问题＃42主题2			178
+ 
+公司的DevOps团队使用Amazon WorkSpaces为每个新用户启动WorkSpace。最近，安全团队说，这些新用户的WorkSpaces并没有得到一致的标记。公司政策要求所有工作空间在创建后都自动用USERNAME标记。
+DevOps工程师应采取哪些步骤来满足此要求？ （选择两个。）
+ 
+A.添加一个AWS Lambda函数策略，允许cloudtrail.amazonaws.com使用lambda：InvokeFunction操作。
+ 
+B.使用通过CloudTrail事件类型的AWS API调用，基于Amazon WorkSpaces创建新的Amazon CloudWatch Events事件模式规则。选择CreateWorkspaces操作，然后定位将标记工作区的AWS Lambda函数。
+ 
+C.确保在创建WorkSpaces的所有区域中都启用了AWS CloudTrail。
+ 
+D.从目录详细信息启用Amazon WorkSpaces的自定义标记。
+ 
+E.基于间隔为1分钟的Amazon WorkSpaces创建新的Amazon CloudWatch Events预定事件规则。定位将标记工作区的AWS Lambda函数。
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+BC
+https://aws.amazon.com/cn/blogs/security/how-to-automatically-tag-amazon-ec2-resources-in-response-to-api-events/
+
+
+
+
+问题＃47主题2			183
+ 
+一家公司使用Amazon EC2和本地配置运行应用程序。 DevOps工程师需要在两个环境之间标准化补丁。公司政策规定，修补程序仅在非工作时间进行。
+哪种动作组合可以满足这些要求？ （选择三个。）
+ 
+A.使用Systems Manager混合激活将物理机添加到AWS Systems Manager中。
+ 
+B.将IAM角色附加到EC2实例，允许它们由AWS Systems Manager进行管理。
+ 
+C.为本地计算机创建IAM访问密钥以与AWS Systems Manager进行交互。
+ 
+D.执行一个AWS Systems Manager自动化文档以每小时对系统进行修补。
+ 
+E.使用Amazon CloudWatch Events安排的事件来安排补丁程序窗口。
+ 
+F.使用AWS Systems Manager维护窗口计划补丁程序窗口。
+ 
+
+
+
+
+
+ 
+
+
+
+
+
+
+ ABF
+
+
+问题＃51主题2			187
+ 
+DevOps工程师的任务是将在Go中运行的关键任务业务应用程序迁移到AWS。运行此应用程序的开发团队的人员不足，并且需要一种解决方案，使该团队可以专注于应用程序开发。他们还希望启用蓝色/绿色部署并执行A / B测试。
+哪种解决方案可以满足这些要求？
+ 
+A.在Amazon EC2实例上部署应用程序并创建此实例的AMI。使用此AMI创建在Auto Scaling组中使用的自动扩展启动配置。使用弹性负载均衡器分配流量。对应用程序进行更改后，将创建一个新的AMI并替换启动配置。
+ 
+B.使用Amazon Lightsail部署应用程序。将应用程序以压缩格式存储在Amazon S3存储桶中。使用此压缩版本将应用程序的新版本部署到Lightsail。使用Lightsail部署选项来管理部署。
+ 
+C.结合使用AWS CodePipeline和AWS CodeDeploy将应用程序部署到Amazon EC2实例队列。使用弹性负载均衡器将流量分配到EC2实例。对应用程序进行更改时，将新版本上载到CodePipeline，并让其部署新版本。
+ 
+D.使用AWS Elastic Beanstalk托管应用程序。在Amazon S3中存储应用程序的压缩版本，并使用该位置使用Elastic Beanstalk来管理应用程序的部署新版本。
+
+
+
+
+
+
+
+
+ 
+
+D
+
+问题＃54主题2			190
+ 
+一家公司计划停止使用Amazon EC2密钥对进行SSH访问，而是计划使用AWS Systems Manager Session Manager。为了进一步提高安全性，必须仅通过专用网络访问Session Manager。
+哪些动作组合可以达到目的？ （选择两个。）
+ 
+A.允许从VPC CIDR范围对所有关联的EC2安全组中的TCP端口22进行入站访问。
+ 
+B.将具有必要的Systems Manager权限的IAM策略附加到现有IAM实例配置文件。
+ 
+C.在所需区域中为Systems Manager创建VPC端点。
+ 
+D.部署一个新的EC2实例，它将充当其余EC2实例舰队的堡垒主机。
+ 
+E.删除关联的路由表中的任何默认路由。
+
+
+
+
+
+
+
+
+
+
+
+
+BC
