@@ -1,0 +1,1779 @@
+totol:70
+
+问题##主题1
+
+为了运行应用程序，DevOps工程师使用公共子网中的公共IP地址启动Amazon EC2实例。用户数据脚本获取应用程序工件，并在启动时将其安装在实例上。现在，更改应用程序的安全性类别要求实例在无法访问Internet的情况下运行。尽管实例成功启动并显示为正常，但似乎未安装该应用程序。
+在遵循新规则的同时，以下哪项应该成功安装应用程序？
+
+A.在连接了弹性IP地址的公共子网中启动实例。安装并运行该应用程序后，请运行脚本以随后取消关联弹性IP地址。
+
+B.设置一个NAT网关。将EC2实例部署到专用子网。更新专用子网的路由表，以将NAT网关用作默认路由。
+
+C.将应用程序工件发布到Amazon S3存储桶，并为S3创建VPC终端节点。将IAM实例配置文件分配给EC2实例，以便它们可以从S3存储桶中读取应用程序工件。
+
+D.为应用程序实例创建一个安全组，并仅将到工件存储库的出站流量列入白名单。安装完成后，删除安全组规则。
+ 
+
+
+
+
+
+
+C
+
+
+问题#2#主题1
+
+IT部门在本地和AWS上都使用Windows和Linux（Amazon和Red Hat Enterprise Linux）服务器管理产品组合。审核发现没有更新操作系统和核心应用程序补丁的过程，并且服务器的补丁程序级别不一致。
+以下哪项提供了MOST可靠且一致的机制，可以在最新的OS和核心应用程序补丁程序级别上更新和维护所有服务器？
+
+A.在所有本地和AWS服务器上安装AWS Systems Manager代理。创建系统管理员资源组。将Systems Manager Patch Manager与预先配置的补丁程序基线一起使用，以在维护时段内运行计划的补丁程序更新。
+
+B.在所有本地和AWS服务器上安装AWS OpsWorks代理。为每个操作系统创建一个具有单独层的OpsWorks堆栈，并从Chef超市获取食谱，以便在维护时段内为每个层运行补丁命令。
+
+C.使用Shell脚本使用yum在Linux服务器上安装最新的OS补丁程序，并安排它使用cron自动运行。使用Windows Update自动修补Windows服务器。
+
+D.使用AWS Systems Manager参数存储安全地存储每个Linux和Windows服务器的凭证。创建系统管理员资源组。使用Systems Manager运行命令使用Systems Manager参数存储中的凭据远程部署修补程序更新
+ 
+
+
+
+
+
+
+A
+
+
+问题#＃8主题1
+
+一家总部位于美国的在线零售公司计划在未来六个月内将业务扩展到欧洲和亚洲。目前其产品运行于
+应用程序负载平衡器后面的Amazon EC2实例。实例在多个可用区中的Amazon EC2 Auto Scaling组中运行。所有数据都存储在Amazon Aurora数据库实例中。
+当产品在多个区域中部署时，公司希望在所有区域中使用一个产品目录，但是出于合规目的，必须在每个区域中保存其客户信息和购买信息。
+公司应如何通过最少的申请变更来满足这些要求？
+
+A.将Amazon Redshift用于产品目录，并将Amazon DynamoDB表用于客户信息和购买。
+
+B.将Amazon DynamoDB全局表用于产品目录，将区域表用于客户信息和购买
+
+C.将Aurora与只读副本一起用于产品目录，并在每个区域中使用其他本地Aurora实例来获取客户信息和购买信息。
+
+D.将Aurora用于产品目录，将Amazon DynamoDB全局表用于客户信息和购买。
+
+
+
+
+
+
+
+
+
+C
+
+
+问题#＃9主题1
+
+一家公司有多个AWS账户。这些帐户在全球范围内的多个团队之间共享和使用，主要用于Amazon EC2实例。每个EC2实例都有针对团队，环境和成本中心的标签，以确保准确的成本分配。
+DevOps工程师应如何帮助团队审核成本，并在多个共享环境和帐户中自动化基础架构成本优化？
+
+A.在EC2实例上设置计划的脚本以报告利用率，并将实例存储在Amazon DynamoDB表中。使用DynamoDB作为源数据在Amazon QuickSight中创建仪表板，以查找未充分利用的实例。在AWS Lambda中从Amazon QuickSight设置触发器，以减少未充分利用的实例。
+
+B.根据成本中心，环境和团队为EC2实例标签创建一个单独的Amazon CloudWatch仪表板，并使用每个团队的唯一链接发布实例标签。对于每个团队，以CloudWatch仪表板为源来设置CloudWatch Events规则，并设置触发器以启动AWS Lambda函数以减少未充分利用的实例。
+
+C.使用AWS Trusted Advisor作为低利用率EC2实例的源创建Amazon CloudWatch Events规则。触发一个AWS Lambda函数，该函数根据每个团队，环境和成本中心的标签过滤出报告的数据，并将Lambda函数存储在Amazon S3中。设置第二个触发器以启动Lambda函数，以减少未充分利用的实例。
+
+D.使用AWS Systems Manager跟踪实例利用率并将未充分利用的实例报告给Amazon CloudWatch。根据团队，环境和成本中心的标签过滤CloudWatch中的数据。将触发器从CloudWatch设置到AWS Lambda中以减少未充分利用的实例
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ C
+
+
+
+
+
+
+
+问题#＃14主题1
+
+开发人员正在为新的开发团队设计一个连续的部署工作流，以促进AWS中源代码升级的过程。开发人员希望存储和促进从开发到生产的部署代码，同时保持在部署失败时回滚该部署的能力。
+哪种设计会导致最少的停机时间？
+
+A.在AWS CodeCommit中创建一个存储库。创建一个开发分支来保存合并的更改。使用AWS CodeBuild来构建和测试存储在开发分支中的代码，该代码在新提交时触发。通过使用AWS CodeDeploy进行蓝色/绿色部署，合并到主数据库并部署到生产中。
+
+B.在AWS CodeCommit中为每个开发人员创建一个存储库，并在另一个存储库中存储生产代码。使用AWS CodeBuild合并开发和生产存储库，并使用AWS CodeDeploy部署到生产中进行蓝色/绿色部署。
+
+C.在AWS CodeCommit中为开发代码创建一个存储库，并在另一个存储库中存储生产代码。使用AWS CodeBuild合并开发和生产存储库，并使用AWS CodeDeploy部署到生产中进行蓝色/绿色部署。
+
+D.创建一个共享的Amazon S3存储桶，以供开发团队存储其代码。设置Amazon CloudWatch Events规则以触发AWS Lambda函数，该函数通过使用AWS CodeDeploy进行蓝/绿部署将代码部署到生产中。
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ A
+
+
+问题#＃16主题1
+
+工程团队管理Node.js电子商务应用程序。 当前环境由以下组件组成：
+>用于存储内容的Amazon S3存储桶
+>用于前端Web服务器的Amazon EC2
+>用于执行图像处理的AWS Lambda
+> Amazon DynamoDB，用于存储与会话相关的数据
+该小组预计该网站的访问量会大大增加。 应用程序应处理额外的负载而不会中断。 该团队通过向EC2前端添加新服务器以处理更大的负载来运行初始测试，但是实例最多需要20分钟才能完全配置。 团队希望减少此配置时间。
+工程团队将需要实施哪些更改，以使该解决方案具有最大的弹性和可用性，同时满足预期的需求增长？
+
+A.使用AWS OpsWorks在启动每个新EC2实例时自动对其进行配置。通过使用跨多个可用区的Application Load Balancer后面的Auto Scaling组来配置EC2实例。实施Amazon DynamoDB Auto Scaling。使用Amazon Route 53将应用程序DNS记录指向应用程序负载均衡器。
+
+B.部署一批EC2实例，将当前容量增加一倍，并将其放置在Application Load Balancer之后。增加Amazon DynamoDB的读取和写入容量单位。将包含Application Load Balancer终端节点的别名记录添加到指向该应用程序的现有Amazon Route 53 DNS记录。
+
+C.配置Amazon CloudFront，并将其起点指向Amazon S3以托管Web应用程序。实施Amazon DynamoDB Auto Scaling。使用Amazon Route 53将应用程序DNS记录指向CloudFront DNS名称。
+
+D.将AWS Elastic Beanstalk与包含所有Web组件的自定义AMI一起使用。使用跨多个可用区的Application Load Balancer后面的Auto Scaling组来部署平台。实施Amazon DynamoDB Auto Scaling。使用Amazon Route 53将应用程序DNS记录指向Elastic Beanstalk负载均衡器。
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ D
+
+问题#＃18主题1
+
+一个开发团队正在构建40多个应用程序。 每个应用程序都是基于ELB应用程序负载均衡器，Amazon EC2和Amazon RDS的三层Web应用程序。 由于这些应用程序将在内部使用，因此安全团队希望只允许从公司网络访问40个应用程序，并阻止来自外部IP地址的访问。 公司网络通过代理服务器到达Internet。 代理服务器具有12个代理IP地址，每月更改一次或两次。 网络基础架构团队管理代理服务器； 他们将包含最新代理IP地址的文件上传到Amazon S3存储桶。 DevOps工程师必须构建解决方案，以确保可以从公司网络访问应用程序。
+哪种解决方案可以满足这些要求，并且对应用程序开发产生最小的影响，最小的运营投入以及最低的基础架构成本？
+
+A.实施AWS Lambda函数以从S3对象读取代理IP地址列表，并更新ELB安全组以仅允许来自给定IP地址的HTTPS。配置S3存储桶以在对象更新时调用Lambda函数。更改后，将IP地址列表保存到S3存储桶。
+
+B.确保所有应用程序都托管在同一虚拟私有云（VPC）中。否则，将应用程序整合到单个VPC中。使用活动/备用配置建立AWS Direct Connect连接。更改ELB安全组，以仅允许来自公司网络IP地址的入站HTTPS连接。
+
+C.使用适用于Python的AWS开发工具包（Boto）实现Python脚本，该脚本将下载包含代理IP地址的S3对象，扫描ELB安全组，并更新它们以仅允许从给定IP地址入站的HTTPS。启动EC2实例并将脚本存储在该实例中。使用cron作业每天执行脚本。
+
+D.启用ELB安全组以允许从Internet进行HTTPS入站访问。使用Amazon Cognito将公司的Active Directory集成为身份提供者。更改40个应用程序以与Amazon Cognito集成，以便只有公司员工才能登录该应用程序。将用户访问日志保存到Amazon CloudWatch Logs以记录用户访问活动
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ A
+
+
+问题#＃21主题1
+
+DevOps工程师管理用于管理视频制作公司的视频文件的应用程序。 该应用程序在ELB应用程序负载均衡器后面的Amazon EC2实例上运行。 实例在多个可用区中的Auto Scaling组中运行。 数据存储在Amazon RDS PostgreSQL Multi-AZ数据库实例中，视频文件存储在Amazon S3存储桶中。 通常，每天有50 GB的新视频添加到S3存储桶中。 工程师必须实施数据丢失最少，恢复时间最少的多区域灾难恢复计划。 已经使用AWS CloudFormation描述了当前应用程序基础架构。
+工程师应选择哪种部署选项来满足系统的正常运行时间和恢复目标？
+
+A.从第二个区域中的CloudFormation模板启动应用程序，该模板将Auto Scaling组的容量设置为1。在第二个区域中创建Amazon RDS只读副本。在第二个区域中，启用原始S3存储桶和新S3存储桶之间的跨区域复制。要进行故障转移，请将只读副本提升为主副本。更新CloudFormation堆栈并增加Auto Scaling组的容量。
+
+B.从第二个区域中的CloudFormation模板启动应用程序，该模板将Auto Scaling组的容量设置为1。创建一个计划任务，以将每日Amazon RDS跨区域快照带到第二个区域。在第二个区域中，启用原始S3存储桶和Amazon Glacier之间的跨区域复制。在发生灾难时，请在第二个区域中启动新的应用程序堆栈，然后从最新快照中还原数据库。
+
+C.从第二个区域中的CloudFormation模板启动应用程序，该模板将Auto Scaling组的容量设置为1。使用Amazon CloudWatch Events安排一个夜间任务来拍摄数据库快照，将快照复制到第二个区域，并替换快照中第二个区域中的数据库实例。在第二个区域中，启用原始S3存储桶和新S3存储桶之间的跨区域复制。要进行故障转移，请增加Auto Scaling组的容量。
+
+D.使用Amazon CloudWatch Events安排一个夜间任务，以获取数据库快照并将快照复制到第二个区域。创建一个AWS Lambda函数，以将每个对象复制到第二个区域中的新S3存储桶，以响应S3事件通知。在第二个区域中，从CloudFormation模板启动应用程序，然后从最新快照还原数据库。
+ 
+
+ 
+
+
+
+
+
+A
+问题#＃22主题1
+
+社交网络服务运行Web API，允许其合作伙伴搜索公开帖子。 发布数据存储在Amazon DynamoDB中并由AWS Lambda函数建立索引，而Amazon ES域存储索引并为应用程序提供搜索功能。
+该服务需要在部署期间保持完整的容量，并确保失败的部署不会导致停机或容量减少，也不会阻止后续部署。
+如何满足这些要求？ （选择两个）
+
+A.在AWS Elastic Beanstalk中运行Web应用程序，并将部署策略设置为“一次全部”。使用AWS CloudFormation模板部署Lambda函数，DynamoDB表和Amazon ES域。
+
+B.在AWS CloudFormation模板中部署Web应用程序，Lambda函数，DynamoDB表和Amazon ES域。使用AWS CodeDeploy就地部署来部署更改。
+
+C.在AWS Elastic Beanstalk中运行Web应用程序，并将部署策略设置为Immutable。使用AWS CloudFormation模板部署Lambda函数，DynamoDB表和Amazon ES域。
+
+D.在AWS CloudFormation模板中部署Web应用程序，Lambda函数，DynamoDB表和Amazon ES域。使用AWS CodeDeploy蓝色/绿色部署来部署更改。
+
+E.在AWS Elastic Beanstalk中运行Web应用程序，并将部署策略设置为Rolling。使用AWS CloudFormation模板部署Lambda函数，DynamoDB表和Amazon ES域。
+ 
+
+
+
+
+
+
+
+
+CD
+
+
+问题#＃26主题1
+
+DevOps工程师具有一个Amazon DynamoDB表，该表接收运输订单并跟踪库存。工程师具有从该表上的DymamoDB流读取的三个AWS Lambda函数。 Lambda函数执行各种功能，例如进行项目计数，将项目移动到Amazon Kinesis
+数据Firehose，监视库存水平，并在零件不足时创建供应商订单。
+在查看日志时，工程师注意到Lambda功能在负载增加的情况下偶尔会失败，从而收到流节流错误。
+哪项最省钱的解决方案需要最少的运营管理？
+
+A.使用AWS Glue集成来摄取DynamoDB流，然后将Lambda代码迁移到AWS Fargate任务。
+
+B.使用Amazon Kinesis流而不是DynamoDB流，然后使用Kinesis分析触发Lambda函数。
+
+C.创建第四个Lambda函数并将其配置为从流中读取的唯一Lambda函数。然后使用此Lambda函数将有效负载传递给其他三个Lambda函数。
+
+D.让Lambda函数直接查询表并禁用DynamoDB流。然后让Lambda函数从全局二级索引进行查询。
+ 
+
+
+
+
+
+
+
+
+C
+
+
+问题#＃28主题1
+
+医疗保健提供商的混合架构包括120台运行RedHat的本地VMware服务器和50台运行Amazon的Amazon EC2实例Linux。该公司正处于向AWS全面迁移的过程中，并希望实施一种解决方案，以从本地虚拟机和EC2实例收集信息以进行数据分析。该信息包括：
+-操作系统类型和版本
+-已安装应用程序的数据
+-网络配置信息，例如MAC和IP地址
+-Amazon EC2实例AMI ID和IAM配置文件
+用最少的管理量如何满足这些要求？
+
+A.编写一个shell脚本以在EC2实例上作为cron作业运行，以收集数据并将其推送到Amazon S3。对于本地资源，请使用VMware vSphere收集数据并将其写入文件网关以在S3中存储数据。最后，在S3存储桶上使用Amazon Athena进行分析。
+
+B.在本地虚拟机以及EC2实例上使用脚本来收集数据并将其推送到Amazon S3，然后使用Amazon Athena进行分析。
+
+C.在本地虚拟机和EC2实例上都安装AWS Systems Manager代理。 启用库存收集并配置资源数据同步到Amazon S3存储桶，以使用Amazon Athena分析数据。
+
+D.使用AWS Application Discovery Service在VMware环境中部署无代理发现连接器，并在EC2实例上部署发现代理以收集数据.然后使用AWS Migration Hub仪表板进行分析。
+
+
+
+
+
+
+
+
+
+
+
+C
+
+问题#＃29主题1
+
+在迁移到AWS之前，公司必须确保在其企业生态系统中的Amazon Linux上运行的应用程序具有一致的行为。该公司拥有使用VMware的现有自动服务器构建系统。目的是在新的目标操作系统上演示应用程序的功能及其先决条件。
+DevOps工程师需要使用现有的公司服务器管道和虚拟化软件来创建服务器映像。服务器映像将在本地进行测试，以尽可能类似于Amazon EC2上的构建。
+如何做到这一点？
+
+A.下载并集成最新的CentOS 7 ISO，并在生成的服务器上执行应用程序部署。
+
+B.使用AWS OpsWorks部署代理在本地基础架构上启动Amazon Linux AMI，然后执行应用程序部署。
+
+C.使用最新的Amazon Linux操作系统构建EC2实例，并使用AWS Import / Export服务将EC2映像导出到Amazon S3中的VMware ISO。然后将生成的ISO导入到本地系统上。
+
+D.下载并集成最新的Amazon Linux 2 ISO，并在生成的服务器上执行应用程序部署。确认操作系统测试结果与EC2操作系统行为一致。
+ 
+
+
+
+
+
+
+
+
+D
+
+问题#＃30主题1
+
+一个开发团队正在为电子商务应用程序添加一个新的国家。此添加要求将新的应用程序功能添加到应用程序的运输组件。团队尚未决定是否应添加所有新功能，因为某些功能可能需要大约六周的时间才能构建。在做出有关运输组件功能的最终决定时，其他团队成员将继续致力于该应用程序的其他功能。
+根据这种情况，应如何管理应用程序功能部署？
+
+A.将代码更新作为提交添加到release分支。该团队可以延迟部署，直到所有功能都准备就绪为止。
+
+B.作为对功能分支的提交，添加代码更新。功能就绪后，将提交合并到发行分支。
+
+C.在功能就绪时，将代码更新作为一次提交添加。将此提交标记为“新国家”。
+
+D.创建一个名为“ new-country”的新存储库。将所有代码更改提交到新存储库。
+ 
+
+
+
+
+
+
+
+
+B
+
+问题#＃34主题1
+
+一家公司在AWS Lambda中运行微服务，该微服务从Amazon DynamoDB读取数据。 Lambda代码是由开发人员在成功测试后手动部署的。 公司现在需要使测试和部署自动化并在云中运行。 此外，部署后，每个微服务的新版本的流量应随时间逐步转移。
+哪种解决方案可以满足所有要求，并确保MOST开发人员的速度？
+
+A.创建一个AWS CodePipeline配置并设置一个提交后挂钩，以在测试通过后触发管道。使用AWS CodeDeploy并创建一个Canary部署配置，该配置指定流量百分比和间隔。
+
+B.创建一个AWS CodeBuild配置，该配置在推送测试代码时触发。使用AWS CloudFormation触发AWS CodePipeline配置，该配置将部署新的Lambda版本并指定流量转移百分比和间隔。
+
+C.创建一个AWS CodePipeline配置并设置源代码步骤以在推送代码时触发。设置构建步骤以使用AWS CodeBuild运行测试。设置要部署的AWS CodeDeploy配置，然后选择CodeDeployDefault.LambdaLinear10PercentEvery3Minutes选项。
+
+D.使用AWS CLI设置提交后钩子，该钩子在测试通过后将代码上传到Amazon S3存储桶。设置一个S3事件触发器，该触发器运行一个Lambda函数来部署新版本。使用Lambda函数中的间隔以所需的百分比随时间部署代码。
+ 
+
+
+
+
+
+
+
+
+C
+
+问题#＃35主题1
+
+一家公司正在使用AWS CloudFormation模板来部署Web应用程序。该模板要求对以下三个主要环境中的每一个进行手动更改：生产，登台和开发。当前的冲刺包括用于自动部署的AWS CodePipeline的新实现和配置。
+DevOps工程师应进行哪些更改以确保CloudFormation模板可在多个管道中重复使用？
+
+A.使用CloudFormation自定义资源查询CodePipeline的状态，以确定启动哪个环境。动态更改Amazon EC2实例的启动配置。
+
+B.为每个环境设置一个CodePipeline管道以使用输入参数。使用CloudFormation映射为Amazon EC2实例切换关联的UserData以匹配正在启动的环境。
+
+C.建立一个CodePipeline管道，该管道具有多个阶段，每个开发环境一个阶段。使用AWS Lambda函数触发CloudFormation部署，以动态更改在每个环境中启动的Amazon EC2实例的UserData。
+
+D.每次更新CloudFormation堆栈时，使用CloudFormation输入参数来动态更改每个Amazon EC2实例的LaunchConfiguration和UserData部分。
+ 
+
+
+
+
+
+
+
+
+B
+
+问题#＃43主题1
+
+公司使用的复杂系统由网络，IAM策略和多个三层应用程序组成。 仍在为新系统定义需求，因此最终设计中存在的AWS组件数量未知。 DevOps工程师需要开始使用AWS CloudFormation定义AWS资源，以自动化新版本并对其进行版本控制。
+使用CloudFormation创建新环境的最佳实践是什么？
+
+A.使用Amazon VPC手动构建网络层，然后使用CloudFormation定义所有其他资源。
+
+B.创建一个模板以包含系统所需的所有资源，因此只有一个模板可以进行版本控制。
+
+C.为系统的每个逻辑部分创建多个单独的模板，在CloudFormation中使用跨栈引用，并在版本控制中维护多个模板。
+
+D.为系统的每个逻辑部分创建许多单独的模板，并使用运行SDK的Amazon EC2实例进行粒度控制，从而提供一个到另一个的输出。
+ 
+
+
+
+
+
+
+C
+
+问题#＃45主题1
+
+一个没有Internet访问权限的Amazon EC2实例正在虚拟私有云（VPC）中运行，并且需要从受限制的Amazon S3存储桶下载对象。当DevOps工程师尝试获取对对象的访问权限时，会收到AccessDenied错误。
+此错误的可能原因是什么？ （选择三个。）
+
+A. S3存储桶默认加密已启用。
+
+B. S3存储桶策略中有错误。
+
+C. VPC终结点策略中有错误。
+
+D.该对象已移至Amazon Glacier。
+
+E. IAM角色配置中有错误。
+
+F.启用S3版本控制。
+ 
+
+
+
+
+
+
+
+
+BCE
+
+
+问题#＃46主题1
+
+应用程序的微服务分布在不同的AWS账户中，并与本地旧版系统集成以实现某些功能。
+由于分段的体系结构和缺少的日志，因此，每当应用程序遇到问题#时，收集日志以识别问题#所花费的时间就太长了。 DevOps工程师必须修复日志聚合过程，并提供一种集中分析日志的方法。
+哪种是最有效且最具成本效益的解决方案？
+
+A.使用Amazon CloudWatch Logs代理收集系统日志和应用程序日志。使用Amazon S3 API导出本地日志，并将日志存储在中央帐户的S3存储桶中。构建Amazon EMR集群以减少日志并得出根本原因。
+
+B.使用Amazon CloudWatch Logs代理收集系统日志和应用程序日志。使用Amazon S3 API导入本地日志。将所有日志存储在各个帐户的S3存储桶中。使用Amazon Macie编写查询以搜索所需的特定事件相关数据点。
+
+C.使用Amazon CloudWatch Logs代理收集系统日志和应用程序日志。在本地服务器上安装CloudWatch Logs代理。将所有日志从AWS传输到本地数据中心。使用Amazon Elasticsearch Logstash Kibana堆栈来分析场所中的日志。
+
+D.使用Amazon CloudWatch Logs代理收集系统日志和应用程序日志。安装用于内部部署资源的CloudWatch Logs代理。将所有日志存储在中央帐户的S3存储桶中。设置Amazon S3触发器和AWS Lambda函数以分析传入的日志并自动识别异常。使用Amazon Athena对中央帐户中的日志运行临时查询。
+ 
+
+
+
+
+
+
+D
+
+
+问题#＃49主题1
+
+DevOps工程师正在领导使用AWS Systems Manager（SSM）在混合云环境中自动修补基于Windows的工作站的实施。
+工程师应该采取什么步骤来设置Systems Manager在这种环境下自动执行补丁程序？ （选择两个。）
+
+
+
+A.为Systems Manager创建多个IAM服务角色，以便ssm.amazonaws.com服务可以在每个实例上执行AssumeRole操作。在每个资源级别上注册角色，以启用服务令牌的创建。使用附加到每个托管实例的新创建的服务角色执行托管实例激活。
+
+B.为Systems Manager创建一个IAM服务角色，以便ssm.amazonaws.com服务可以执行AssumeRole操作。注册角色以启用服务令牌的创建。使用新创建的服务角色执行托管实例激活。
+
+C.使用先前获得的激活码和激活ID，在混合服务器上下载并安装SSM代理，并在Systems Manager服务上注册服务器或虚拟机。混合实例将在SSM控制台中显示为“ mi-”前缀。
+
+D.使用先前获得的激活码和激活ID，在混合服务器上下载并安装SSM代理，并在Systems Manager服务上注册服务器或虚拟机。混合实例将在SSM控制台中以“ i-”前缀显示，就好像它们是作为常规Amazon EC2实例配置的一样。
+
+E.运行AWS Config以创建未打补丁且不符合要求的实例列表。创建实例调度程序作业，然后通过AWS Lambda函数执行实例修补以使它们达到合规性。
+ 
+
+
+
+
+
+
+
+
+BC
+
+
+
+
+问题#＃53主题1
+
+一家大型企业正在AWS上部署Web应用程序。 该应用程序在Application Load Balancer后面的Amazon EC2实例上运行。 实例在多个可用区中的Auto Scaling组中运行。 该应用程序将数据存储在Amazon RDS Oracle数据库实例和Amazon DynamoDB中。
+有单独的开发，测试和生产环境。
+在部署期间获取密码凭据的最安全，灵活的方法是什么？
+
+
+A.从AWS Systems Manager SecureString参数检索访问密钥以访问AWS服务。从系统管理器SecureString参数中检索数据库凭据。
+
+B.以EC2 IAM角色启动EC2实例以访问AWS服务。从AWS Secrets Manager检索数据库凭证。
+
+C.从AWS Systems Manager纯文本参数检索访问密钥以访问AWS服务。从系统管理器SecureString参数中检索数据库凭据。
+
+D.以EC2 IAM角色启动EC2实例以访问AWS服务。将数据库密码存储在带有应用程序工件的加密配置文件中。
+ 
+
+
+
+
+
+
+
+B
+
+问题#＃56主题1
+
+一家出版公司使用AWS Elastic Beanstalk，Amazon S3和Amazon DynamoDB来开发Web应用程序。 Web应用程序的受欢迎程度急剧增加，导致流量出现不可预测的高峰。 DevOps工程师已注意到90％的请求是重复的读取请求。
+工程师如何改善网站的性能？
+
+
+A.使用Amazon ElastiCache for Redis将重复的读取请求缓存到DynamoDB和AWS Elemental MediaStore，以缓存存储在S3中的图像。
+
+B.使用Amazon ElastiCache for Memcached缓存对DynamoDB的重复读取请求，并使用Varnish缓存S3中存储的图像。
+
+C.使用DynamoDB Accelerator将重复的读取请求缓存到DynamoDB和Amazon CloudFront，以缓存存储在S3中的图像。
+
+D.使用DynamoDB流将重复的读取请求缓存到DynamoDB和API网关，以缓存存储在S3中的图像。
+
+
+
+
+
+
+
+
+
+
+C
+
+问题#＃57主题1
+
+一家公司正在创建一种执行特定并行处理机制的软件解决方案。在某些特殊情况下，该软件可以扩展到数十台服务器。此解决方案使用基于许可证的专有库，要求每个服务器都安装一个专用许可证。该公司拥有200个许可证，并计划最多同时运行200个服务器节点。
+
+该公司要求以下功能：
+“¢一种自动大规模使用许可证的机制。
+”¢创建仪表板以供将来使用，以随时验证哪些许可证可用。
+
+满足这些要求的最有效的方法是什么？
+
+A.将许可证上传到私有Amazon S3存储桶。使用许可的“映射”部分创建一个AWS CloudFormation模板。在模板中，创建一个Auto Scaling组以启动服务器。在用户数据脚本中，从“映射”部分获取可用许可证。创建一个Auto Scaling生命周期挂钩，然后在实例终止后使用它来更新映射。
+
+B.将许可证上传到Amazon DynamoDB表。创建一个使用Auto Scaling组来启动服务器的AWS CloudFormation模板。在用户数据脚本中，从DynamoDB表获取可用许可证。创建一个Auto Scaling生命周期挂钩，然后在实例终止后使用它来更新映射。
+
+C.将许可证上传到私有Amazon S3存储桶。使用存储在S3中的许可证列表填充Amazon SQS队列。创建一个使用Auto Scaling组来启动服务器的AWS CloudFormation模板。在用户数据脚本中，从SQS获取可用许可证。创建一个Auto Scaling生命周期挂钩，然后在实例终止后使用它将许可证放回SQS中。
+
+D.将许可证上传到Amazon DynamoDB表。使用参数--count创建一个AWS CLI脚本以启动服务器，并启动min：max实例。在用户数据脚本中，从DynamoDB表中获取可用许可证。监视每个实例，并在发生故障的情况下更换该实例，然后手动更新DynamoDB表。
+ 
+
+
+
+
+
+
+
+
+B
+
+问题#＃58主题1
+
+一家公司开发了一个托管在Amazon S3存储桶上的静态网站。 该网站是使用AWS CloudFormation部署的。 CloudFormation模板定义了一个S3存储桶和一个自定义资源，该资源将内容从源位置复制到该存储桶中。
+该公司已决定需要将网站移至新位置，因此必须删除并重新创建现有的CloudFormation堆栈。 但是，CloudFormation报告无法彻底删除堆栈。
+造成此问题的最可能原因是什么？DevOps工程师如何针对该网站的此版本和将来的版本缓解此问题？
+
+
+A. 删除失败，因为S3存储桶具有活动的网站配置。修改CloudFormation模板，以从S3存储桶资源中删除WebsiteConfiguration属性。
+
+B.删除失败，因为S3存储桶不为空。修改自定义资源的AWS Lambda函数代码，以在“删除”时递归清空存储桶。请求类型
+
+C.删除失败，因为自定义资源未定义删除策略。将DeletionPolicy属性添加到自定义资源定义中，该属性的值为RemoveOnDeletion。
+
+D.删除失败，因为S3存储桶不为空。修改CloudFormation模板中的S3存储桶资源，以添加值为空的DeletionPolicy属性。
+ 
+
+
+
+
+
+
+
+B
+
+问题#＃61主题1
+
+一家公司希望为部署在AWS上的应用程序实施CI / CD管道。该公司还拥有一个托管在内部的源代码分析工具，用于检查安全漏洞。该工具尚未迁移到AWS，只能在本地访问。该公司希望在编译代码之前，将对源代码的检查作为管道的一部分进行。检查需要几分钟到一个小时才能完成。
+DevOps工程师如何满足这些要求？
+
+A.使用AWS CodePipeline创建管道。在源阶段之后，向管道添加操作以调用AWS Lambda函数。让Lambda函数根据CodePipeline的源输入在本地调用源代码分析工具。然后，该函数等待执行完成并将输出放置在指定的Amazon S3位置。
+
+B.使用AWS CodePipeline创建管道，然后创建自定义操作类型。为在本地托管的硬件上运行的自定义操作创建作业工人。作业工作者使用本地代码分析工具处理运行中的安全检查，然后将作业结果返回给CodePipeline。让管道在源阶段之后调用自定义操作。
+
+C.使用AWS CodePipeline创建管道。在源阶段之后添加一个步骤，以向本地托管的Web服务发出HTTPS请求，以使用源代码分析工具调用测试。分析完成后，Web服务会将结果放入CodePipeline提供的Amazon S3输出位置，从而将结果发送回去。
+
+D.使用AWS CodePipeline创建管道。创建一个shell脚本，将输入的源代码复制到场所中的某个位置。调用源代码分析工具，然后将结果返回给CodePipeline。通过在源阶段之后添加自定义脚本操作来调用Shell脚本。
+ 
+
+
+ 
+
+
+
+
+
+B
+
+问题#＃65主题1
+
+安全团队依靠AWS CloudTrail来检测公司AWS账户中的敏感安全问题。 DevOps工程师需要一种解决方案来自动修复在AWS账户中关闭的CloudTrail。
+哪种解决方案可确保CloudTrail日志交付的停机时间最少？
+
+
+A.为CloudTrail StopLogging事件创建Amazon CloudWatch Events规则。创建一个使用AWS开发工具包在调用StopLogging的资源的ARN上调用StartLogging的AWS Lambda函数。将Lambda函数ARN添加为CloudWatch Events规则的目标。
+
+B.部署以AWS托管的，启用CloudTrail的AWS Config规则，该规则设置为1小时的定期间隔。为AWS Config规则合规性更改创建Amazon CloudWatch Events规则。创建一个使用AWS开发工具包在调用StopLogging的资源的ARN上调用StartLogging的AWS Lambda函数。将Lambda函数ARN添加为CloudWatch Events规则的目标。
+
+C.每隔5分钟为计划的事件创建一个Amazon CloudWatch Events规则。创建一个AWS Lambda函数，该函数使用AWS开发工具包在AWS账户中的CloudTrail跟踪上调用StartLogging。将Lambda函数ARN添加为CloudWatch Events规则的目标。
+
+D.使用每5分钟运行一次的脚本启动t2.nano实例，该脚本使用AWS SDK来查询当前帐户中的CloudTrail。如果禁用了CloudTrail路径，请让脚本重新启用该路径。
+ 
+
+
+
+
+
+
+
+A
+
+
+问题#＃67主题1
+
+一家公司正在构建使用由AWS Lambda和Amazon API Gateway支持的无服务器架构的Web和移动应用程序。该公司希望基于推送到AWS CodeCommit存储库中相应环境分支的代码完全自动化后端Lambda部署。
+部署必须具有以下内容：
+✑environment用于测试和生产的单独环境管道。
+✑仅在测试环境中进行的自动部署。
+应该采取哪些步骤来满足这些要求？
+
+A.配置一个新的AWS CodePipeline服务。为每个环境创建一个CodeCommit存储库。设置CodePipeline以从适当的存储库中检索源代码。设置部署步骤以使用AWS CloudFormation部署Lambda函数。
+
+B.为测试和生产环境创建两个AWS CodePipeline配置。配置生产管道以具有手动批准步骤。为每个环境创建一个CodeCommit存储库。设置每个CodePipeline，以从相应的存储库中检索源代码。设置部署步骤，以使用AWS CloudFormation部署Lambda函数。
+
+C.为测试和生产环境创建两个AWS CodePipeline配置。配置生产管道以具有手动批准步骤。为每个环境创建一个带有分支的CodeCommit存储库。设置每个CodePipeline，以从存储库中的相应分支检索源代码。设置部署步骤，以使用AWS CloudFormation部署Lambda函数。
+
+D.为测试和生产环境创建一个AWS CodeBuild配置。配置生产管道以具有手动批准步骤。为每个环境创建一个带有分支的CodeCommit存储库。将Lambda功能代码推送到Amazon S3存储桶。设置部署步骤以从S3存储桶中部署Lambda函数。
+ 
+
+
+
+
+
+
+
+C
+
+
+问题#＃68主题1
+
+一家公司正在使用AWS作为应用程序。开发团队必须自动化其部署。团队已经设置了一个AWS CodePipeline，以在使用AWS CodeBuild服务构建应用程序之后，通过使用AWS CodeDeploy将应用程序部署到Amazon EC2实例。
+团队希望向管道添加自动测试，以在使用相同代码将应用程序部署到管道的下一阶段之前，确认应用程序是否正常。即使测试成功，团队也需要在部署应用程序之前进行手动批准操作。必须使用最简单的管理解决方案以最低的成本完成测试和批准。
+哪种解决方案可以满足这些要求？
+
+A.在管道的最后一个部署操作之后添加一个手动批准操作。使用Amazon SNS通知团队正在触发的阶段。接下来，使用CodeBuild添加测试操作以执行所需的测试。在管道的最后，添加部署操作，以将应用程序部署到下一阶段。
+
+B.在管道的最后一个部署动作之后添加一个测试动作。配置操作以使用CodeBuild执行必需的测试。如果这些测试成功，则将操作标记为成功。添加使用Amazon SNS通知团队的手动批准操作，并添加部署操作以将应用程序部署到下一阶段。
+
+C.创建一个新的管道，该管道使用源操作，该操作从与第一个管道相同的存储库中获取代码。添加部署操作以将代码部署到测试环境。通过AWS Lambda使用测试操作来测试部署。使用Amazon SNS通知团队来添加手动批准操作，并添加部署操作以将应用程序部署到下一阶段。
+
+D.在最后一个部署操作之后添加一个测试操作。使用Amazon EC2上的Jenkins服务器执行所需的测试，如果测试通过，则将操作标记为成功。创建使用Amazon SQS通知团队的手动批准操作，并添加部署操作以将应用程序部署到下一阶段。
+ 
+
+
+
+
+
+
+
+
+B
+
+
+问题#＃69主题1
+
+一家公司正在构建一种解决方案，用于在AWS上存储包含个人身份信息（PII）的文件。
+需求状态：
+✑所有数据在静止和传输过程中都必须加密。
+✑所有数据必须在相距至少500英里的至少两个位置中复制。
+哪种解决方案满足这些要求？
+
+A.在至少相距500英里的两个单独的可用区中创建主要和辅助Amazon S3存储桶。使用存储桶策略仅通过HTTPS强制对存储桶的访问。使用存储桶策略对上载到存储桶的所有对象实施Amazon S3 SSE-C。在两个存储桶之间配置跨区域复制。
+
+B.在相距至少500英里的两个单独的AWS区域中创建主要和辅助Amazon S3存储桶。使用存储桶策略仅通过HTTPS强制对存储桶的访问。使用存储桶策略对所有上传到存储桶的对象实施S3-Managed Keys（SSE-S3）。在两个存储桶之间配置跨区域复制。
+
+C.在相距至少500英里的两个单独的AWS区域中创建主要和辅助Amazon S3存储桶。使用IAM角色仅通过HTTPS强制对存储桶的访问。使用存储桶策略对上载到存储桶的所有对象实施Amazon S3托管密钥（SSE-S3）。在两个存储桶之间配置跨区域复制。
+
+D.在相距至少500英里的两个单独的可用区中创建主要和辅助Amazon S3存储桶。使用存储桶策略仅通过HTTPS强制对存储桶的访问。使用存储桶策略对所有上传到存储桶的对象实施AWS KMS加密。在两个存储桶之间配置跨区域复制。在主要区域中创建KMS客户主密钥（CMK），以对对象进行加密。
+ 
+
+
+
+
+
+
+
+
+
+B
+
+
+问题#＃75主题1
+
+DevOps工程师负责PHP应用程序的部署。工程师正在混合部署中，该应用程序同时在本地服务器和Amazon EC2实例上运行。该应用程序需要访问包含高度机密信息的数据库。应用程序实例需要访问数据库凭证，这些凭证必须在静态和传输中进行加密，然后才能到达实例。
+工程师如何在满足安全性要求的同时使部署过程自动化？
+
+A.将AWS Elastic Beanstalk与PHP平台配置一起使用，以将应用程序包部署到实例。使用安全字符串数据类型将数据库凭证存储在AWS Systems Manager参数存储中。为允许访问的Amazon EC2定义IAM角色，并仅解密数据库凭证。将此角色与所有实例相关联。
+
+B.使用AWS CodeDeploy将应用程序包部署到实例。使用安全字符串数据类型将数据库凭证存储在AWS Systems Manager参数存储中。定义用于允许访问的IAM策略，并仅解密数据库凭据。将IAM策略附加到与CodeDeploy管理的实例的实例配置文件关联的角色，以及用于在CodeDeploy上注册本地实例的角色。
+
+C.使用AWS CodeDeploy将应用程序包部署到实例。使用安全字符串数据类型将数据库凭证存储在AWS Systems Manager参数存储中。使用允许解密数据库凭据的附加策略定义IAM角色。将此角色与所有实例和本地服务器相关联。
+
+D.使用AWS CodeDeploy将应用程序包部署到实例。将数据库凭据存储在AppSpec文件中。定义一个IAM策略，以仅允许访问数据库凭据。将IAM策略附加到与CodeDeploy管理的实例的实例配置文件关联的角色以及用于在CodeDeploy上注册本地实例的角色。
+ 
+
+
+
+
+
+
+
+B
+
+
+问题#＃76主题1
+
+一家公司只有一个开发人员为自动部署管道编写代码。开发人员将每个项目的源代码存储在Amazon S3存储桶中。该公司希望为团队增加更多的开发人员，但担心代码冲突和工作丢失。该公司还希望构建一个测试环境，以部署更新版本的代码进行测试，并允许开发人员在存储库中更改代码时自动将其部署到两个环境中。
+满足这些要求的最有效的方法是什么？
+
+A.为每个项目创建一个AWS CodeCommit存储库，将master分支用于生产代码，并为将要部署到测试的代码创建一个test分支。使用功能分支开发新功能并提取请求以将代码合并到测试分支和主分支。
+
+B.为每个项目创建另一个S3存储桶以测试代码，并使用AWS Lambda函数促进测试和生产存储桶之间的代码更改。在所有存储桶上启用版本控制，以防止代码冲突。
+
+C.为每个项目创建一个AWS CodeCommit存储库，并将master分支用于生产和测试代码，并为每个环境使用不同的部署管道。使用功能分支来开发新功能。
+
+D.在每个S3存储桶上启用版本控制和分支，将master分支用于生产代码，并为将代码部署到测试创建测试分支。让开发人员在每个环境中使用每个分支进行开发。
+
+
+
+
+
+
+
+
+
+
+
+A
+
+问题#＃79主题1
+
+一家公司发现某些IAM用户已将其AWS访问密钥存储在已推送到Git存储库托管服务的配置文件中。
+哪种解决方案将需要最少的管理开销，同时又要防止使用公开的AWS访问密钥？
+
+A.构建一个应用程序，该应用程序将创建账户中所有AWS访问密钥的列表，并在Git存储库托管服务上搜索每个密钥。如果找到匹配项，请将应用程序配置为禁用关联的访问密钥。然后将应用程序部署到AWS Elastic Beanstalk工作者环境，并定义一个定期任务以每小时调用一次。
+
+B.使用Amazon Inspector来检测密钥何时在线暴露。公开密钥后，让Amazon Inspector向Amazon SNS主题发送通知。创建订阅了SNS主题的AWS Lambda函数以禁用密钥所属的IAM用户，然后删除该密钥以使其无法使用。
+
+C.配置AWS Trusted Advisor，并创建一个使用Trusted Advisor作为事件源的Amazon CloudWatch Events规则。配置CloudWatch Events规则以调用AWS Lambda函数作为目标。如果Lambda函数找到了公开的访问密钥，请使其禁用访问密钥，使其无法使用。
+
+D.创建一个AWS Config规则以检测何时在线公开密钥。 Haw AWS Config将更改通知发送到SNS主题。配置订阅了SNS主题的AWS Lambda函数，以检查由AWS Config发送的通知，然后禁用访问密钥，使其无法使用。
+ 
+
+
+
+
+
+
+C
+
+问题#＃81主题1
+
+DevOps工程师需要在AWS中部署可扩展的三层Node.js应用程序。该应用程序在部署期间的停机时间必须为零，并且能够回滚到以前的版本。其他应用程序也将连接到相同的MySQL后端数据库。
+CIO提供了以下日志记录指南：
+✑集中查看所有当前的Web访问服务器日志。
+✑几乎实时搜索和过滤Web和应用程序日志。
+✑保留日志数据三个月。
+这些要求应如何满足？
+
+A.使用AWS Elastic Beanstalk部署应用程序。为Elastic Load Balancing和Auto Scaling配置环境类型。在Elastic Beanstalk堆栈中创建一个Amazon RDS MySQL实例。配置Elastic Beanstalk日志选项以将日志流式传输到Amazon CloudWatch Logs。将保留期限设置为90天。
+
+B.在Amazon EC2上部署应用程序。配置弹性负载平衡和自动缩放。将Amazon RDS MySQL实例用于数据库层。配置应用程序以将日志文件存储在Amazon S3中。使用Amazon EMR搜索和过滤数据
+A.设置Amazon S3生命周期规则以使对象在90天后失效。
+
+C.使用AWS Elastic Beanstalk部署应用程序。为Elastic Load Balancing和Auto Scaling配置环境类型。在Elastic Beanstalk堆栈之外创建Amazon RDS MySQL实例。配置Elastic Beanstalk日志选项以将日志流式传输到Amazon CloudWatch Logs。将保留期限设置为90天。
+
+D.在Amazon EC2上部署应用程序。配置弹性负载平衡和自动缩放。将Amazon RDS MySQL实例用于数据库层。配置应用程序以使用Amazon Kinesis Data Firehouse将流日志数据加载到Amazon ES中。每隔90天删除并创建一个新的Amazon ES域。
+ 
+
+
+
+
+
+
+
+C
+
+
+问题#＃82主题1
+
+IT团队已构建了一个AWS CloudFormation模板，以便公司中的其他人员可以快速可靠地部署和终止应用程序。该模板使用用户数据脚本创建一个Amazon EC2实例，以安装该应用程序，并创建一个Amazon S3存储桶，该应用程序在运行时用于提供静态网页。
+删除CloudFormation堆栈时，应删除所有资源。但是，该团队发现CloudFormation在堆栈删除期间报告了一个错误，并且堆栈创建的S3存储桶未删除。
+团队如何以最有效的方式解决错误，以确保删除所有资源而不会出现错误？
+
+A.将DeletionPolicy属性添加到S3存储桶资源，其值Delete强制在删除堆栈时删除存储桶。
+
+B.当带有DependsOn属性的AWS Lambda函数指定S3存储桶和IAM角色时，添加自定义资源。当RequestType为Delete时，使用Lambda函数删除存储桶中的所有对象。
+
+C.标识未删除的资源。在S3控制台中，清空S3存储桶，然后将其删除。
+
+D.用单个AWS OpsWorks Stacks资源替换EC2和S3存储桶资源。为堆栈定义自定义配方，以创建和删除EC2实例和S3存储桶。
+ 
+
+
+
+
+
+
+
+B
+
+问题#＃87主题1
+
+聘请了一家咨询公司来评估客户公司应用程序中的安全漏洞，并提出补救所有已发现问题的计划。 该架构的标识如下：用于内容的Amazon S3存储，具有附加的Amazon EBS存储的Elastic Load Balancer后的Amazon EC2实例的Auto Scaling组和Amazon RDS MySQL数据库。 还有一些AWS Lambda函数可以使用代码中的连接字符串语句直接与RDS数据库进行通信。
+顾问确定了以下最大的安全威胁：应用程序不满足其静态加密的要求。
+哪种解决方案将以最小的运营开销解决此问题，并提供对未来潜在违规行为的监视？
+
+
+A.在S3存储桶和RDS数据库上启用SSE加密。在EBS卷上启用基于OS的数据加密。在EC2实例上配置Amazon Inspector代理以报告不安全的加密密码。设置AWS Config规则以定期检查未加密的S3对象。
+
+B.配置应用程序以加密每个文件，然后再存储在Amazon S3上。在EBS卷上启用基于OS的数据加密。写入RDS时对数据进行加密。在每个实例上运行cron作业，以检查加密的数据并通过Amazon SNS进行通知。使用S3 Events调用AWS Lambda函数并验证文件是否已加密。
+
+C.在负载均衡器上启用安全套接字层（SSL），确保AWS Lambda使用SSL与RDS数据库进行通信，并启用S3加密。配置应用程序以强制SSL用于传入连接，并配置RDS仅在会话加密时才授予访问权限。在EC2实例上配置Amazon Inspector代理以报告不安全的加密密码。
+
+D.在S3存储桶，EBS卷和RDS数据库上启用SSE加密。将RDS凭证存储在EC2参数存储中。在S3存储桶上启用策略以拒绝未加密的Put。设置AWS Config规则以定期检查未加密的S3对象和EBS卷，并确保RDS存储已加密。
+ 
+
+
+
+
+
+
+
+
+D
+
+问题#＃90主题1
+
+两个团队正在架构的不同部分上一起工作，并且正在使用AWS CloudFormation来管理其资源。一个团队管理操作系统级别的更新和补丁，而另一个团队管理应用程序级别的依赖性和更新。在创建新实例和部署应用程序时，应用程序团队必须采用最新的AMI。
+连接这两个团队和流程的MOST可伸缩方法是什么？
+
+A. 操作系统团队使用CloudFormation创建其AMI的新版本，并在堆栈输出部分的一部分中，在加密的Amazon S3对象中列出AMI的Amazon资源名称（ARN）。应用程序团队使用跨堆栈引用来加载加密的S3对象并获取最新的AMI ARN。
+
+B.操作系统团队使用CloudFormation堆栈来创建构建新AMI的AWS CodePipeline管道，然后将最新的AMI ARN放置在加密的Amazon S3对象中作为管道输出的一部分。应用程序团队在其自己的CloudFormation模板中使用跨堆栈引用来获取该S3对象位置，并获取在部署其应用程序时要使用的最新AMI ARN。
+
+C.操作系统团队使用CloudFormation堆栈创建一个构建新AMI的AWS CodePipeline管道。然后，团队将AMI ARN作为参数放置在AWS Systems Manager参数存储中，作为管道输出的一部分。应用程序团队在其CloudFormation堆栈中指定ssm类型的参数，以从参数存储中获取最新的AMI ARN。
+
+D.操作系统团队维护一个包含操作系统和应用程序团队模板的嵌套堆栈。每当应用程序团队更改应用程序代码时，操作系统团队便使用堆栈更新将更新部署到应用程序堆栈。
+ 
+
+
+
+
+
+
+
+C
+
+
+问题#＃91主题1
+
+部署团队在最近几个月中有了实质性的增长，因此使用独立代码存储库的项目数量也有所增加。当前过程涉及手动配置AWS CodePipeline，并且存在有关Amazon S3存储桶数量的服务限制警报。
+哪个管道选项将减少S3存储桶蔓延警报？
+
+A.将多个单独的代码存储库合并为一个存储库，并使用具有针对每个项目的逻辑的全局AWS CodePipeline进行部署。
+
+B.通过使用AWS API或AWS CLI创建新管道，并将其配置为使用单个全局S3存储桶，并为每个项目使用单独的前缀。
+
+C.在每个区域的不同区域中创建一个新管道，以绕过单个区域中S3存储桶的服务限制。
+
+D.通过使用AWS API或AWS CLI绕过单个帐户中S3存储桶的服务限制，为每个项目创建一个新管道和S3存储桶。
+ 
+
+
+
+
+
+
+
+
+B
+
+
+问题#＃92主题1
+
+一家新兴公司正在AWS上开发Web应用程序。它计划使用Amazon RDS进行持久化，并通过自动将应用程序部署到Amazon EC2伸缩组。该公司还希望将开发，测试和生产环境分开。
+什么是管理应用程序配置的最安全，灵活的方法？
+
+A.创建一个属性文件以包括配置和加密的密码。将属性文件检入源存储库，将属性文件与应用程序打包，然后部署应用程序。为EC2实例创建一个环境标签并分别标记这些实例。应用程序将基于环境标签提取必要的属性值。
+
+B.为每个环境创建一个属性文件，以包括特定于环境的配置和加密的密码。将属性文件检入源存储库。在部署期间，仅将特定于环境的属性文件与应用程序一起使用。应用程序将从已部署的属性文件中读取所需的属性值。
+
+C.为每个环境创建一个属性文件，以包括特定于环境的配置。创建一个私有Amazon S3存储桶，并将属性文件保存在存储桶中。使用AWS KMS加密将密码保存在存储桶中。在部署期间，应用程序将从S3存储桶中特定于环境的属性文件中读取所需的属性值。
+
+D.为每个环境创建一个属性文件，以包括特定于环境的配置。创建一个私有Amazon S3存储桶，并将属性文件保存在存储桶中。将加密的密码保存在AWS Systems Manager参数存储中。为EC2实例创建一个环境标签并分别标记这些实例。应用程序将从S3存储桶和参数存储中的特定于环境的属性文件中读取所需的属性值。
+ 
+
+
+
+
+
+
+
+
+D
+
+
+
+
+问题#＃93主题1
+
+DevOps工程师正在EC2 Auto Scaling组中的一系列Amazon EC2实例中使用AWS CodeDeploy。 与EC2 Auto Scaling集成在一起的关联CodeDeploy部署组被配置为使用CodeDeployDefault.OneAtATime执行就地部署。 在正在进行的新部署中，工程师发现，尽管整个部署成功完成，但五分之二的实例已部署了先前的应用程序修订版。 其他三个实例具有最新的应用程序修订版。
+是什么导致此问题？
+
+A. 两个受影响的实例无法获取新的部署。
+
+B.失败的AfterInstall生命周期事件挂钩导致CodeDeploy代理在受影响的实例上回滚到以前的版本。
+
+C. CodeDeploy代理未安装在两个受影响的实例中。
+
+D. EC2 Auto Scaling在新部署尚未完成的同时启动了两个新实例，从而导致在受影响的实例上部署了以前的版本。
+ 
+
+
+
+
+
+
+
+
+D
+
+问题#＃102主题1
+
+一家公司在AWS Elastic Beanstalk负载平衡和自动扩展环境中拥有一个网站。 该环境具有配置为数据库资源的Amazon RDS MySQL实例。 在流量突然增加之后，该网站开始减少流量。
+管理员发现，由于内存不足错误，某些实例上的应用程序没有响应。 Classic Load Balancer将这些实例标记为停止服务，并且Elastic Beanstalk增强的运行状况报告的运行状况降低。 但是，Elastic Beanstalk不会替换那些实例。 由于Classic Load Balancer背后的容量减少，因此客户的应用程序响应时间变慢了。
+哪项操作可以永久解决此问题？
+
+A.克隆Elastic Beanstalk环境。新环境启动后，交换CNAME并终止较早的环境。
+
+B.临时更改Auto Scaling组中的最大实例数，以允许该组支持更多流量。
+
+C.将Auto Scaling组运行状况检查的设置从Amazon EC2更改为Elastic Load Balancing，并增加组的容量。
+
+D.编写一个cron脚本来限制内存已满时的Web服务器进程，然后使用AWS Systems Manager进行部署。
+ 
+
+
+
+
+
+
+
+
+C
+
+问题#＃105主题1
+
+DevOps团队需要在应用程序日志中查询信息，这些信息是由运行多个使用AWS Elastic Beanstalk部署的Amazon EC2实例的应用程序生成的。
+在Elastic Beanstalk上启用了将实例日志流传输到Amazon CloudWatch Logs的功能。
+哪种方法最有成本效益？
+
+A.使用CloudWatch Logs订阅来触发AWS Lambda函数，以将日志数据发送到具有Amazon S3存储桶目标的Amazon Kinesis Data Firehouse流。使用Amazon Athena从存储桶中查询日志数据。
+
+B.使用CloudWatch Logs订阅触发AWS Lambda函数，以将日志数据发送到具有Amazon S3存储桶目标的Amazon Kinesis Data Firehouse流。使用新的Amazon Redshift集群和Amazon Redshift Spectrum从存储桶中查询日志数据。
+
+C.使用CloudWatch Logs订阅将日志数据发送到具有Amazon S3存储桶目标的Amazon Kinesis Data Firehouse流。使用Amazon Athena从存储桶中查询日志数据。
+
+D.使用CloudWatch Logs订阅将日志数据发送到具有Amazon S3存储桶目标的Amazon Kinesis Data Firehouse流。使用新的Amazon Redshift集群和Amazon Redshift Spectrum从存储桶中查询日志数据。
+ 
+
+
+
+
+
+
+
+
+C
+
+问题#＃106主题1
+
+公司的Web应用程序将迁移到AWS。该应用程序的设计使其不需要服务器端代码。作为迁移的一部分，该公司希望遵循开放式Web应用程序安全项目（OWASP）安全标头的建议，通过添加HTTP响应标头来提高应用程序的安全性。
+如何使用最佳实践来实施此解决方案以满足安全要求？
+
+A.使用为网站托管配置的Amazon S3存储桶，然后在S3存储桶上设置服务器访问日志以跟踪用户活动。然后配置静态网站托管并执行计划的AWS Lambda函数以进行验证，如果缺少，则将安全标头添加到metadat
+一种。
+
+B.使用为网站托管配置的Amazon S3存储桶，然后在S3存储桶上设置服务器访问日志以跟踪用户活动。配置静态网站托管以返回所需的安全标头。
+
+C.使用为网站托管配置的Amazon S3存储桶。创建一个引用此S3存储桶的Amazon CloudFront发行版，并将源响应事件设置为触发Lambda @ Edge Node.js函数以添加安全性标头。
+
+D.设置为网站托管配置的Amazon S3存储桶。创建引用此S3存储桶的Amazon CloudFront分配。将“基于所选请求标头的缓存”设置为“白名单”，然后将安全标头添加到白名单中。
+ 
+
+
+
+
+
+
+
+
+C
+
+问题#＃112主题1
+
+一家公司开发了Node.js Web应用程序，该应用程序提供REST服务来存储和检索时间序列数据。 该Web应用程序由开发团队在公司笔记本电脑上构建，在本地进行测试，并手动部署到单个本地服务器上，该服务器访问本地MySQL数据库。 该公司将在两周内开始试用，在此期间，该应用将根据客户反馈进行频繁更新。 必须满足以下要求：
+✑团队必须能够每天可靠地构建，测试和部署新更新，而不会造成停机或性能下降。
+✑试用期间，应用程序必须能够扩展以满足无法预测的并发用户数。
+团队可以采取哪些行动来快速实现这些目标？
+
+A.为Node.js创建两个Amazon Lightsail虚拟专用服务器；一种用于测试，另一种用于生产。使用现有流程构建Node.js应用程序，然后使用AWS CLI将其上载到新的Lightsail测试服务器。测试应用程序，如果它通过所有测试，则将其上传到生产服务器。在试用期间，监视生产服务器的使用情况，并在需要时通过升级实例类型来提高性能。
+
+B.开发一个AWS CloudFormation模板，以在启用了滚动更新的Auto Scaling组中创建一个应用程序负载均衡器和两个具有Amazon EBS（SSD）卷的Amazon EC2实例。使用AWS CodeBuild来构建和测试Node.js应用程序并将其存储在Amazon S3存储桶中。使用用户数据脚本在每个EC2实例上安装应用程序和MySQL数据库。更新堆栈以部署新的应用程序版本。
+
+C.配置AWS Elastic Beanstalk以使用AWS CodeBuild自动构建应用程序，并将其部署到配置为支持自动扩展的测试环境中。创建第二个Elastic Beanstalk环境进行生产。使用Amazon RDS存储数据. 当新版本的应用程序通过所有测试后，请使用Elastic Beanstalk“〜swap cname”将测试环境推广到生产环境。
+
+D.修改应用程序以使用Amazon DynamoDB代替本地MySQL数据库。使用AWS OpsWorks为具有DynamoDB层，Application Load Balancer层和Amazon EC2实例层的应用程序创建堆栈。使用Chef配方构建应用程序，并使用Chef配方将应用程序部署到EC2实例层。使用自定义运行状况检查在每个实例上运行单元测试，并在失败时回滚。
+ 
+
+
+
+
+
+
+
+
+
+C
+
+问题#＃113主题1
+
+DevOps工程师正在开发一种部署策略，该策略将允许在完全批准某个功能以实现通用可用性之前进行数据驱动的决策。当前的部署过程使用AWS CloudFormation和蓝色/绿色样式的部署。开发团队已决定应将客户随机分配到组，而不是使用固定的百分比，并且应避免重定向。
+实施新的部署策略应遵循什么过程？
+
+A.为蓝色和绿色堆栈配置Amazon Route 53加权记录，并将50％的流量配置为路由到每个堆栈。
+
+B.使用AWS Lambda @ Edge功能配置Amazon CloudFront以在CloudFront收到请求时设置cookie。为用户分配版本A或B，并配置Web服务器以重定向到版本A或B．
+
+C.使用AWS Lambda @ Edge功能配置Amazon CloudFront以在CloudFront收到请求时设置cookie。为用户分配版本A或B，然后将相应的版本返回给查看器。
+
+D.使用AWS Lambda函数配置Amazon Route 53以在Amazon CloudFront收到请求时设置cookie。为用户分配版本A或B，然后将相应的版本返回给查看器。
+ 
+
+
+
+
+
+
+
+
+C
+
+问题#＃114主题1
+
+一家公司正在测试一个在Application Load Balancer之后的Amazon EC2实例上运行的Web应用程序。实例在多个可用区中的Auto Scaling组中运行。在部署新软件时，该公司使用具有不变实例的蓝色/绿色部署过程。
+在测试期间，用户会在随机时间自动退出应用程序。测试人员还报告说，在部署新版本的应用程序时，所有用户都将注销。开发团队需要一种解决方案，以确保用户在扩展事件和应用程序部署中保持登录状态。
+确保用户保持登录状态的最有效的方法是什么？
+
+A.在负载均衡器上启用智能会话，然后修改应用程序以检查现有会话。
+
+B.在负载均衡器上启用会话共享，并修改应用程序以从会话存储中读取。
+
+C.将用户会话信息存储在Amazon S3存储桶中，并修改应用程序以从存储桶中读取会话信息。
+
+D.修改应用程序以将用户会话信息存储在Amazon ElastiCache cluser中。
+ 
+
+
+
+
+
+
+
+
+D
+问题#＃117主题1
+
+开发团队在AWS CodeBuild中创建一个构建项目。构建项目将调用对访问AWS服务的模块的自动化测试。
+以下哪项将使测试能够安全地运行MOST？
+
+A.为IAM用户生成凭证，并附带一个允许对AWS服务执行操作的策略。将凭据存储为构建项目的加密环境变量。作为构建脚本的一部分，获取凭据以运行集成测试。
+
+B.让CodeBuild作为Jenkins服务器上的构建作业仅运行集成测试。创建一个具有附加策略的角色，以允许对AWS服务执行操作。为允许担任该角色的IAM用户生成凭据。在Jenkins中将凭据配置为机密，并允许构建作业使用它们来运行集成测试。
+
+C.在CodeBuild承担的IAM中创建服务角色，并附加一个允许对AWS服务执行操作的策略。配置构建项目以使用创建的角色。
+
+D.使用AWS托管凭证。使用AWS KMS加密凭证。作为构建脚本的一部分，使用AWS KMS解密并使用这些凭证来运行集成测试。
+ 
+
+
+
+
+
+
+
+
+C
+
+
+问题#＃118主题1
+一家零售公司希望使用AWS Elastic Beanstalk托管其运行在Java上的在线销售网站。由于这将是生产网站，因此CTO对部署策略有以下要求：
+✑零停机时间。正在进行部署时，当前正在使用的Amazon EC2实例应保持服务状态。由于EC2实例会为生产流量提供服务，因此请勿在EC2实例上执行任何部署或任何其他操作。
+✑应该提供新的实例团队以部署新的应用程序版本。
+✑一旦将新的应用程序版本成功部署到新的实例组中，则应将新实例投入使用，并删除旧实例。
+✑回滚应尽可能简单。如果新实例实例无法部署新的应用程序版本，则应终止它们，并且当前实例应继续照常服务流量。
+environment环境中的资源（EC2 Auto Scaling组，Elastic Load Balancing，Elastic Beanstalk DNS CNAME）应保持不变，并且不应进行DNS更改。
+哪种部署策略可以满足要求？
+
+A.一次使用固定数量的一个实例的滚动部署，并将运行状况阈值设置为OK。
+
+B.将滚动部署与其他批次一起使用，一次固定数量的实例，并将正常运行阈值设置为OK。
+
+C.启动一个新环境并在那里部署新的应用程序版本，然后在环境之间执行CNAME交换。
+
+D.使用不可变的环境更新来满足所有必要的要求。
+ 
+
+
+
+
+
+
+
+
+
+
+D
+
+问题＃120主题1
+一家使用电子健康记录的公司正在运行带有Amazon Linux操作系统的Amazon EC2实例。作为患者隐私要求的一部分，公司必须确保对EC2实例上运行的操作系统和应用程序的补丁程序的持续合规性。
+如何使用默认和自定义存储库来自动化操作系统和应用程序补丁的部署？
+
+A.使用AWS Systems Manager创建新的补丁程序基准，包括自定义存储库。使用run命令执行AWS-RunPatchBaseline文档，以验证和安装补丁。
+
+B.使用AWS Direct Connect集成公司存储库并使用Amazon CloudWatch计划的事件部署补丁，然后使用CloudWatch仪表板创建报告。
+
+C.使用yum-config-manager在/etc/yum.repos.d下添加自定义存储库，并运行yum-config-manager-enable激活存储库。
+
+D.使用AWS Systems Manager创建新的补丁程序基准，包括公司存储库。使用run命令执行AWS-AmazonLinuxDefaultPatchBaseline文档，以验证和安装补丁程序。
+
+
+
+
+
+
+
+
+
+A
+
+
+
+问题＃121主题1
+一家使用AWS CodeCommit进行源代码控制的公司希望在其开发环境中自动化其在AWS上的持续集成和持续部署管道。公司有三个要求：
+1.必须对任何代码更改进行法律和安全审查，以确保敏感信息不会通过源代码泄漏。
+2.每个更改都必须经过单元测试。
+3.每个更改都必须经过一套功能测试以确保功能。
+
+另外，公司对自动化有以下要求：
+1.代码更改应自动触发CI / CD管线。
+2.管道中的任何故障都应通知devops-admin@xyz.com。
+3.执行测试后，必须获得批准才能将资产上载到Amazon S3。
+
+在遵循CI / CD最佳实践的同时，DevOps工程师应该怎么做才能满足所有这些要求？
+
+A.提交到开发分支，并从开发分支触发AWS CodePipeline。在CodePipeline中为安全审查，单元测试，功能测试和手动批准建立一个单独的阶段。使用Amazon CloudWatch指标来检测管道阶段的变化，并使用Amazon SES通过电子邮件将电子邮件发送给devops-admin@xyz.com。
+
+B.提交到主线并从主线触发AWS CodePipeline。在CodePipeline中为安全审查，单元测试，功能测试和手动批准建立一个单独的阶段。使用AWS CloudTrail日志来检测管道阶段的更改，并使用Amazon SNS通过电子邮件将电子邮件发送到devops-admin@xyz.com。
+
+C.提交到开发分支，并从开发分支触发AWS CodePipeline。在CodePipeline中为安全审查，单元测试，功能测试和手动批准建立一个单独的阶段。使用Amazon CloudWatch Events来检测管道阶段的变化，并使用Amazon SNS通过电子邮件将电子邮件发送给devops-admin@xyz.com。
+
+D.提交到主线并从主线触发AWS CodePipeline。在CodePipeline中为安全审查，单元测试，功能测试和手动批准建立一个单独的阶段。使用Amazon CloudWatch Events来检测管道阶段的变化，并使用Amazon SES通过电子邮件将电子邮件发送到devops-admin@xyz.com。
+
+
+
+
+
+
+
+
+
+C
+
+问题＃123主题1
+DevOps工程师正在使用AWS CodePipeline构建多阶段管道，以构建，验证，登台，测试和部署应用程序。在测试和部署阶段之间需要一个手动批准阶段。开发团队使用带有Webhook支持的团队聊天工具。
+工程师如何为管道活动和批准请求配置状态更新以发布到聊天工具？
+
+A.创建一个AWS CloudWatch Logs订阅，该订阅根据“详细类型”：“ CodePipeline管道执行状态更改”进行过滤。将其转发到Amazon SNS主题。将聊天Webhook URL作为订阅者添加到SNS主题，并完成订阅验证。
+
+B.创建一个由AWS CloudTrail事件更新触发的AWS Lambda函数。在更新的事件中检测到“ CodePipeline管道执行状态更改”事件时，请将事件详细信息发送到聊天Webhook URL。
+
+C.创建一个AWS CloudWatch Events规则，该规则根据“ CodePipeline管道执行状态更改”进行过滤。将其转发到Amazon SNS主题。将AWS Lambda函数订阅到Amazon SNS主题，然后将事件转发到聊天Webhook URL。
+
+D.修改管道代码，以在每个阶段结束时将事件详细信息发送到聊天Webhook URL。对URL进行参数化，以便每个管道可以根据管道环境发送到不同的URL。
+
+
+
+
+
+
+
+C
+
+
+问题＃126主题1
+一家零售公司当前正在其本地数据中心中托管基于Java的应用程序。管理层希望DevOps工程师将该应用程序移至AWS。需求指出，在保持高可用性的同时，基础架构管理应尽可能简单。同样，在部署新应用程序版本期间，虽然成本是一个重要指标，但工程师需要确保至少有一半的机队可用于处理用户流量。
+哪种选择需要最少的管理开销才能满足这些要求？
+
+A.创建一个AWS CodeDeploy部署组，并将其与Auto Scaling组关联，该组配置为跨不同可用区域中的子网启动实例。使用CodeDeploy.HalfAtAtime配置为应用程序部署配置就地部署。
+
+B.使用Auto Scaling和负载平衡创建一个基于Java的AWS Elastic Beanstalk环境。配置环境的网络设置以跨不同可用区域中的子网启动实例。使用“附加批处理滚动”作为批处理大小为50％的部署策略。
+
+C.创建一个AWS CodeDeploy部署组，并将其与Auto Scaling组关联，该组配置为跨不同可用区域中的子网启动实例。使用自定义部署配置配置就地部署，其中MinimumHealthyHosts选项设置为FLEET_PERCENT，值为50。
+
+D.使用Auto Scaling和负载平衡创建基于Java的AWS Elastic Beanstalk环境。配置环境的网络选项，以跨不同可用区域中的子网启动实例。使用“滚动”作为批量大小为50％的部署策略。
+
+
+
+
+
+
+
+
+
+
+D
+
+问题＃127主题1
+一家拥有分布式开发团队的跨国公司使用在Amazon ECS上运行的微服务架构构建了一个Web应用程序。每个应用程序服务都是独立的，并且在ECS群集中作为服务运行。容器构建文件和源代码位于私有GitHub源代码存储库中。
+存在用于开发，测试和生产环境的单独的ECS集群。
+开发人员需要将功能推送到GitHub存储库中的分支，然后将更改合并到特定于环境的分支（开发，测试或生产）中。此合并需要触发自动管道来运行构建和部署到适当的ECS集群。
+
+作为这些要求的自动化解决方案，DevOps工程师应该推荐什么？
+
+A.为ECS集群和AWS CodePipeline服务创建一个AWS CloudFormation堆栈。将容器构建文件存储在Amazon S3存储桶中。使用提交后挂钩来触发部署ECS集群的CloudFormation堆栈更新。根据S3中的容器构建文件，在ECS集群中添加任务以构建映像并将其推送到Amazon ECR。
+
+B.在AWS CodePipeline中为每个环境创建一个单独的管道。根据对GitHub中相应环境分支的提交触发每个管道。添加一个构建阶段以启动AWS CodeBuild，以从构建文件创建容器映像并将其推送到Amazon ECR。然后添加另一个阶段以针对该环境在适当的集群中更新Amazon ECS任务和服务定义。
+
+C.在AWS CodePipeline中创建管道。将其配置为通过提交到GitHub中的master分支来触发。添加一个阶段以使用Git提交消息来确定应将提交应用于哪个环境，然后调用create-image Amazon ECR命令来构建映像，并将其传递到容器构建文件。然后添加一个阶段，以针对该环境在适当的群集中更新ECS任务和服务定义。
+
+D.在AWS CodeCommit中创建一个新的存储库。在AWS CodeBuild中配置计划的项目，以将GitHub存储库同步到新的CodeCommit存储库。为更改CodeCommit存储库触发的每个环境创建单独的管道。使用AWS Lambda添加一个阶段以构建容器映像并将其推送到Amazon ECR。然后添加另一个阶段以针对该环境在适当的群集中更新ECS任务和服务定义。
+
+
+
+
+
+
+
+
+
+
+B
+
+
+问题＃129主题1
+DevOps工程师管理在Amazon EC2上运行的大型商业网站。该网站使用Amazon Kinesis Data Streams收集和处理Web日志。工程师管理Kinesis消费者应用程序，该应用程序也可以在EC2上运行。大量的数据导致Kinesis消费者应用程序落后，流在处理之前就删除了记录。
+什么是最快的方法来改善流处理？
+
+A.修改Kinesis使用者应用程序以将日志持久存储在Amazon S3中。使用Amazon EMR直接在S3上处理数据，以获取客户见解并将结果存储在S3中。
+
+B.通过基于GetRecord.IteratorAgeMiliseconds Amazon CloudWatch指标添加更多EC2实例，水平扩展Kinesis消费者应用程序。增加Kinesis Data Streams保留期限。
+
+C.转换Kinesis使用者应用程序以使其作为AWS Lambda函数运行。将Kinesis数据流配置为Lambda函数的事件源，以处理数据流。
+
+D.增加Kinesis数据流中的分片数量，以增加整体吞吐量，以便使用者更快地处理数据。
+
+
+
+
+
+
+
+
+
+B
+
+问题＃131主题1
+一家公司正在AWS区域中托管Web应用程序。为了灾难恢复的目的，第二个区域被用作备用区域。灾难恢复要求指出，会话数据必须在近乎实时的区域之间复制，并且1％的请求应路由到辅助区域以连续验证系统功能。此外，如果主要区域的服务中断，流量应自动路由到辅助区域，并且辅助区域必须能够扩展以处理所有流量。
+
+DevOps工程师应如何满足这些要求？
+
+A. 在这两个区域中，将应用程序部署在AWS Elastic Beanstalk上，并将Amazon DynamoDB全局表用于会话数据。将Amazon Route 53加权路由策略与运行状况检查一起使用，以在区域之间分配流量。
+
+B.在两个区域中，在Auto Scaling组中启动该应用程序，并将DynamoDB用于会话数据。将Route 53故障转移路由策略与运行状况检查一起使用，以在区域之间分配流量。
+
+C.在这两个区域中，在Amazon API Gateway公开的AWS Lambda中部署应用程序，并将Amazon RDS PostgreSQL与跨区域复制一起用于会话数据。部署具有客户端逻辑的Web应用程序以直接调用API网关。
+
+D.在这两个区域中，在Auto Scaling组中启动应用程序，并将DynamoDB全局表用于会话数据。启用Amazon CloudFront权重
+
+
+
+
+
+
+
+
+
+
+
+
+A
+
+
+问题2主题2			138  144
+已使用AWS Elastic Beanstalk应用程序部署了Web应用程序。应用程序开发人员担心他们在应用程序的两个不同区域看到高延迟：
+ ✑ HTTP客户端对第三方API的请求
+✑ MySQL客户端库查询到Amazon RDS数据库
+DevOps工程师必须收集跟踪数据以诊断问题。
+
+
+哪些步骤将收集跟踪信息，并且对应用程序的更改和性能影响最少？
+
+A.将其他日志记录添加到应用程序代码。使用Amazon CloudWatch代理将应用程序日志流式传输到Amazon Elasticsearch Service。在Amazon ES中查询日志数据。
+
+B.检测应用程序以使用AWS X-Ray SDK。将跟踪数据发布到Amazon Elasticsearch Service集群。在跟踪数据中查询对HTTP客户端和MySQL客户端的调用。
+
+C.在应用程序的AWS Elastic Beanstalk管理页面上，启用AWS X-Ray守护程序。在X-Ray控制台中查看跟踪数据。
+
+D.使用AWS X-Ray SDK检测应用程序。在应用程序的AWS Elastic Beanstalk管理页面上，启用X-Ray守护程序。在X-Ray控制台中查看跟踪数据。
+
+
+
+
+
+
+
+
+
+D
+问题＃4主题2				140
+一家公司希望实施CI / CD管道来构建和测试其移动应用程序。 DevOps工程师已获得以下要求：
+✑使用AWS CodePipeline编排工作流程。
+✑在真实设备上测试应用程序。
+✑触发通知。
+✑ 将应用程序二进制文件转移到生产帐户中的另一个帐户中。
+✑使应用程序二进制文件可公开访问。
+
+工程师应在管道中执行哪些顺序的操作以满足要求？
+
+A.使用AWS CodeCommit作为代码源，并使用AWS CodeDeploy编译和打包应用程序。使用CodeDeploy将应用程序二进制文件部署到AWS Lambda函数以进行测试。在AWS Lambda上使用第三方库来模拟设备平台。允许Lambda角色上载到生产Amazon S3存储桶。使二进制文件可公开访问。使用Amazon SNS触发通知。
+
+B.使用GitHub作为代码源，并使用AWS Lambda编译和打包应用程序。使用另一个Lambda函数来运行单元测试，并将应用程序二进制文件交付到开发存储桶中。使用开发存储区中的二进制文件并将该应用程序安装在个人设备上进行测试。批准后将二进制文件交付到生产桶中。使用Amazon SNS触发通知。
+
+C.使用Amazon S3存储桶作为代码源，并使用AWS CodeBuild编译和打包应用程序。使用AWS CodeDeploy将应用程序二进制文件部署到设备场以进行测试。将二进制文件交付到生产S3存储桶。使用S3存储桶策略以允许公众读取生产S3存储桶。使用带有Amazon SNS的Amazon CloudWatch Events规则触发通知。
+
+D.使用AWS CodeCommit作为代码源，并使用AWS CodeBuild编译和打包应用程序。调用一个AWS Lambda函数，该函数会将应用程序二进制文件上传到设备场以进行测试。将二进制文件交付到生产的Amazon S3存储桶。使用S3存储桶策略以允许公众读取生产S3存储桶。通过使用Amazon CloudWatch Events规则触发通知。
+
+
+
+
+
+
+
+
+
+
+D
+
+
+
+问题＃5主题2				141
+一系列关键业务的三层Web应用程序的资源在一系列AWS CloudFormation模板中表示。该应用程序将Amazon RDS用于数据，并将Amazon ElastiCache用于会话状态。用户报告应用程序的性能下降。 DevOps工程师注意到，T2实例类型用于应用程序层，并且Amazon CloudWatch中的CPU使用率为100％。
+ 
+工程师应遵循什么过程来以最少的分配量恢复操作给最终用户？
+ 
+A.编写新的CloudFormation模板以将Amazon CloudFront包括在环境中，启动堆栈，并更新Amazon Route 53 A记录
+ 
+B.使用M4实例类型为应用程序层启动新的CloudFormation堆栈，对新堆栈运行验收测试，并更新Amazon Route 53 A记录
+ 
+C.使用T2 Unlimited选项更新应用程序层的CloudFormation堆栈，对新堆栈运行验收测试，并更新Amazon Route 53 A记录
+ 
+D.为不同区域中的应用程序的所有层启动新的CloudFormation堆栈，针对新堆栈运行验收测试，并更新Amazon Route 53 A记录
+ 
+
+
+
+
+
+
+
+
+
+
+B
+
+
+问题＃6主题2			142
+一家公司开发了一个AWS Lambda函数，该函数可以处理通过API收到的订单。该公司正在使用AWS CodeDeploy将Lambda函数部署为CI / CD管道的最后阶段。
+DevOps工程师注意到部署后几秒钟订购API间歇性失败。
+经过一番调查，DevOps工程师认为失败是由于在lambda函数开始执行之前数据库更改没有完全传播。
+DevOps工程师应如何克服这个问题？
+ 
+A.在AppSpec文件中添加一个BeforeAllowTraffic挂钩，以测试并等待任何必要的数据库更改，然后流量才能流到新版本的Lambda函数
+ 
+B.在AppSpec文件中添加AfterAllowTraffic挂钩，以强制流量在允许新版本的Lambda函数响应之前等待任何挂起的数据库更改
+ 
+C.在安装新版本的Lambda函数之前，在AppSpec文件中添加一个BeforeInstall挂钩，以测试并等待任何必要的数据库更改
+ 
+D.将一个ValidateService挂钩添加到AppSpec文件，该挂钩检查传入的流量并在依赖服务（例如数据库）尚未准备好时拒绝有效负载
+
+
+
+
+
+
+
+
+
+
+
+
+A
+
+
+
+问题＃15主题2				151
+DevOps工程师拥有多个遗留应用程序，它们均生成不同的日志格式。工程师必须先将格式标准化，然后再将其写入Amazon S3进行查询和分析。
+如何以最低的成本满足这一要求？
+
+A.让应用程序将其日志发送到Amazon EMR集群并对其进行规范化，然后再将其发送到Amazon S3
+
+B.让应用程序将其日志发送到Amazon QuickSight，然后使用Amazon QuickSight SPICE引擎对日志进行规范化。直接从Amazon QuickSight进行分析
+
+C.将日志保存在Amazon S3中，并使用Amazon Redshift Spectrum规范化日志
+
+D.在每台服务器上使用Amazon Kinesis Agent上传日志，并让Amazon Kinesis Data Firehose使用AWS Lambda函数对日志进行规范化，然后再将其写入Amazon S3
+
+
+
+
+
+
+
+
+ D
+
+
+ 问题＃18主题2			154
+一家公司正在使用AWS CodeDeploy管理其应用程序部署。最近，开发团队决定使用GitHub进行版本控制，并且该团队正在寻找将GitHub存储库与CodeDeploy集成的方法。团队还需要开发一种方法，以便在该存储库上有新提交时自动进行部署。该团队目前正在通过手动指示Amazon S3位置来部署新的应用程序修订版。
+如何以最有效的方式实现集成？
+
+A.创建一个GitHub Webhook将存储库复制到AWS CodeCommit。创建一个使用CodeCommit作为源提供程序并将AWS CodeDeploy用作部署提供程序的AWS CodePipeline管道。配置完成后，将更改提交到GitHub存储库以开始第一个部署。
+
+B.创建一个使用GitHub作为源提供者并将AWS CodeDeploy用作部署提供者的AWS CodePipeline管道。将此新管道与GitHub帐户连接，并指示CodePipeline在GitHub中使用Webhooks在发生更改时自动启动管道。
+
+C.创建一个AWS Lambda函数以定期检查GitHub存储库中是否有新提交。如果找到新的提交，请触发对AWS CodeDeploy的CreateDeployment API调用，以根据部署组中的最后一个提交ID开始新的部署。
+
+D.创建一个AWS CodeDeploy自定义部署配置，以将GitHub存储库与部署组关联。在关联过程中，请使用GitHub对部署组进行身份验证以获得GitHub安全身份验证令牌。配置部署组选项以在发现新提交时自动进行部署。对GitHub存储库执行新提交以触发第一次部署。
+
+
+
+B
+
+
+问题＃20主题2			156
+DevOps工程师希望阻止开发人员将更新直接推送到AWS CodeCommit中的公司主分支。这些更新在合并之前应得到批准。
+哪种解决方案可以满足这些要求？
+
+A.为开发人员配置一个IAM角色，使其可以访问CodeCommit，并且在引用为主分支时明确拒绝写入操作。允许开发人员使用功能分支并在功能完成时创建pull请求。允许批准者使用CodeCommit查看更改并批准请求请求。
+
+B.配置一个IAM角色，供开发人员使用功能分支，并在功能完成时创建pull请求。允许CodeCommit测试功能分支中的所有代码，并动态修改IAM角色以允许将功能分支合并到母版中。允许批准者使用CodeCommit查看更改并批准请求请求。
+
+C.配置一个IAM角色，供开发人员使用功能分支，并在功能完成时创建pull请求。允许CodeCommit测试功能分支中的所有代码，并发出新的AWS Security Token Service（STS）令牌，以允许一次性API调用将功能分支合并到主服务器中。允许批准者使用CodeCommit查看更改并批准请求请求。
+
+D.为具有对CodeCommit的访问权限的开发人员配置IAM角色，并将访问策略附加到CodeCommit存储库，该访问策略在引用为主分支时拒绝开发人员角色的访问。允许开发人员使用功能分支并在功能完成时创建pull请求。允许批准者使用CodeCommit查看更改并批准请求请求。
+
+
+
+
+
+
+
+
+A
+
+
+问题＃23主题2			159
+一家公司有多个开发小组在一个共享的AWS账户中工作。当资源的创建接近帐户的服务限制时，希望通过第三方API调用来通知组的高级经理。
+最少的开发工作量将通过哪种解决方案来实现？
+
+A.创建一个定期运行并针对AWS Lambda函数的Amazon CloudWatch Event规则。在Lambda函数中，评估AWS环境的当前状态，并将部署的资源值与账户上的资源限制进行比较。如果帐户即将达到服务限额，请通知高级经理。
+
+B.部署可刷新AWS Trusted Advisor检查的AWS Lambda函数，并配置Amazon CloudWatch Events规则以定期运行Lambda函数。使用匹配Trusted Advisor事件和目标Lambda函数的事件模式创建另一个CloudWatch Events规则。在目标Lambda函数中，通知高级经理。
+
+C.部署一个AWS Lambda函数以刷新AWS Personal Health Dashboard检查，并配置一个Amazon CloudWatch Events规则以定期运行Lambda函数。使用匹配个人健康仪表板事件和目标Lambda函数的事件模式创建另一个CloudWatch Events规则。在目标Lambda函数中，通知高级经理。
+
+D.添加一个定期运行的AWS Config自定义规则，检查AWS服务限制状态，并将通知流式传输到Amazon SNS主题。部署通知高级经理的AWS Lambda函数，并将Lambda函数订阅到SNS主题。
+
+
+
+
+
+
+
+
+
+
+B
+
+
+问题＃24主题2			160
+一家受到严格监管的公司制定了一项政策，即除紧急情况外，DevOps工程师不得登录其Amazon EC2实例。如果DevOps工程师确实登录，则必须在事件发生后的15分钟内通知安全团队。
+哪种解决方案可以满足这些要求？
+
+A.在每个EC2实例上安装Amazon Inspector代理。订阅Amazon CloudWatch Events通知。触发AWS Lambda函数以检查消息是否与用户登录有关。如果是，请使用Amazon SNS向安全团队发送通知。
+
+B.在每个EC2实例上安装Amazon CloudWatch代理。配置代理以将所有日志推送到Amazon CloudWatch Logs，并设置一个CloudWatch指标过滤器来搜索用户登录。如果找到登录名，请使用Amazon SNS向安全团队发送通知。
+
+C.使用Amazon CloudWatch Logs设置AWS CloudTrail。将CloudWatch Logs订阅到Amazon Kinesis。将AWS Lambda附加到Kinesis进行解析，并确定日志中是否包含用户登录名。如果是这样，请使用Amazon SNS向安全团队发送通知。
+
+D.在每个Amazon EC2实例上设置一个脚本，以将所有日志推送到Amazon S3。设置S3事件以触发AWS Lambda函数，该函数触发Amazon Athena查询的运行。 Athena查询使用Amazon SNS检查登录名并将输出发送给安全团队。
+
+
+
+
+
+
+B
+
+
+
+问题＃25主题2			161
+DevOps工程师管理在应用程序负载平衡器（ALB）后的Amazon EC2实例上运行的Web应用程序。
+实例在多个可用区中的EC2 Auto Scaling组中运行。工程师需要实施以下部署策略：
+>启动第二个实例舰队，其容量与原始舰队相同。
+>在第二支舰队下水时保持原舰队不变。
+>当第二舰队完全部署后，将交通转移到第二舰队。
+>过渡后1小时自动终止原始机队。
+
+哪种解决方案可以满足这些要求？
+
+A.使用AWS CloudFormation模板，将ALB的保留策略设置为1小时。更新Amazon Route 53记录以反映新的ALB。
+
+B.使用两个AWS Elastic Beanstalk环境执行从原始环境到新环境的蓝色/绿色部署。创建应用程序版本生命周期策略以在1小时内终止原始环境。
+
+C.将AWS CodeDeploy与配置有蓝色/绿色部署配置的部署组一起使用。选择选项“终止部署组中的原始实例，等待时间为1小时”。
+
+D.使用AWS Elastic Beanstalk，并将配置设置为不可变。使用Resources键创建一个.ebextension，将ALB的删除策略设置为1小时，然后部署该应用程序。
+
+
+
+
+
+
+
+
+
+C
+
+
+问题＃27主题2			163
+n层应用程序要求在每次部署时删除并重新填充Amazon RDS MySQL数据库实例中的表。此过程可能需要几分钟，并且在完成该过程之前，Web层无法联机。当前，Web层是在Amazon EC2 Auto Scaling组中配置的，实例在每次部署时都会终止并替换。通过通过AWS CodeBuild作业运行SQL查询来填充MySQL表。
+在完全配置数据库之前，应采取什么措施来确保Web层不联机？
+
+A.使用Amazon Aurora替代RDS MySQL。使用快照用正确的数据填充表。
+
+B.修改Auto Scaling组的启动配置，以将用户数据执行暂停600秒，从而可
+以填充表。
+
+C.使用AWS Step Functions监视和维护数据填充状态。在继续部署之前，将数据库标记为正在使用中。
+
+D.使用EC2 Auto Scaling生命周期挂钩暂停Web层的配置，直到填充表格。
+
+
+
+
+
+
+
+
+
+
+D
+
+
+
+问题＃28主题2			164	
+具有多个服务的Web应用程序在Application Load Balancer后面的Amazon EC2实例上运行。该应用程序将数据存储在Amazon RDS Multi-AZ数据库实例中。如果实例上至少有一项服务在运行，则负载平衡器使用的实例运行状况检查将返回PASS。
+该公司将AWS CodePipeline与AWS CodeBuild和AWS CodeDeploy步骤结合使用，以将代码部署到测试和生产环境。最近，一个新版本无法在测试环境中连接到数据库服务器。一个进程正在运行，因此运行状况检查报告运行状况良好，并且该应用程序已升级到生产状态，导致生产中断。该公司希望在将产品升级为生产产品之前确保其测试功能完全正常。
+DevOps工程师应对测试和部署过程进行哪些更改？ （选择两个。）
+
+A.将自动化功能测试添加到管道中，以确保执行可靠的测试用例。
+
+B.向CodeDeploy部署管道添加手动批准操作，该操作需要测试工程师来验证测试环境。
+
+C.重构Elastic Load Balancer正在检查的运行状况检查端点，以更好地验证实际应用程序功能。
+
+D.重构运行状况检查端点，Elastic Load Balancer正在检查以返回基于文本的状态结果，并配置负载均衡器以检查有效响应。
+
+E.在现有测试框架中添加依赖项检查步骤，以确保兼容性。
+
+
+
+
+
+
+BC
+
+
+问题＃29主题2			165
+公司的应用程序当前已部署到单个AWS区域。最近，该公司在另一个大陆开设了新办事处。新办公室的用户正在经历高延迟。该公司的应用程序在应用程序负载平衡器（ALB）后面的Amazon EC2实例上运行，并使用Amazon DynamoDB作为数据库层。实例在多个可用区中的EC2 Auto Scaling组中运行。 DevOps工程师的任务是最大程度地缩短应用程序响应时间并提高两个地区用户的可用性。
+应该采取哪种行动组合来解决延迟问题？ （选择三个。）
+
+A.在启用跨区域复制的新区域中创建一个新的DynamoDB表。
+
+B.创建新的ALB和Auto Scaling组的全局资源，并配置新的ALB以将流量定向到新的Auto Scaling组。
+
+C.在新的区域中创建新的ALB和Auto Scaling组资源，并配置新的ALB以将流量定向到新的Auto Scaling组。
+
+D.创建Amazon Route 53记录，运行状况检查和基于延迟的路由策略以路由到ALB。
+
+E.创建Amazon Route 53别名，运行状况检查和故障转移路由策略以路由到ALB。
+
+F.将DynamoDB表转换为全局表。
+
+
+
+
+
+
+
+
+
+CDF
+
+
+
+
+问题＃30主题2			166
+安全检查确定，AWS CodeBuild项目正在使用未经身份验证的请求从Amazon S3存储桶下载数据库填充脚本。安全团队不允许对此项目的S3存储桶进行未经身份验证的请求。
+如何以MOST安全方式解决此问题？
+
+A.将存储桶名称添加到CodeBuild项目设置的AllowedBuckets部分。更新构建规范以使用AWS CLI下载数据库填充脚本。
+
+B.修改S3存储桶设置以启用HTTPS基本身份验证并指定令牌。更新构建规范以使用cURL传递令牌并下载数据库填充脚本。
+
+C.使用存储桶策略从S3存储桶中删除未经身份验证的访问。修改CodeBuild项目的服务角色以包括Amazon S3访问。使用AWS CLI下载数据库填充脚本。
+
+D.使用存储桶策略从S3存储桶中删除未经身份验证的访问。使用AWS CLI使用IAM访问密钥和秘密访问密钥下载数据库填充脚本。
+
+
+
+
+
+
+
+
+
+
+
+
+
+C
+
+
+问题＃34主题2			170
+一家公司正在使用AWS CodeBuild部署基于容器的应用程序。安全团队要求在部署之前使用受密码保护的端点对所有容器进行漏洞扫描。所有敏感信息必须安全存储。
+应该使用哪种解决方案来满足这些要求？
+
+A.使用AWS KMS加密密码。将加密的密码作为环境变量存储在buildspec.yml文件中，位于变量映射下。引用环境变量以启动扫描。
+
+B.将密码导入到AWS CloudHSM密钥中。在变量映射下，将buildpec.yml文件中的CloudHSM密钥作为环境变量引用。引用环境变量以启动扫描。
+
+C.将密码作为安全字符串存储在AWS Systems Manager参数存储中。将参数存储键作为环境变量添加到buildspec.yml文件中，作为参数存储映射下的环境变量。引用环境变量以启动扫描。
+
+D.使用AWS Encryption SDK加密密码，并作为密码映射下的变量嵌入到buildspec.yml文件中。将策略附加到CodeBuild以启用对所需解密密钥的访问。
+
+
+
+
+
+
+
+
+
+
+
+C
+
+问题＃45主题2			181
+ 
+DevOps工程师需要使用S3跨区域复制功能通过私有存储桶策略备份存储在S3存储桶中的敏感Amazon S3对象。需要将对象复制到其他AWS区域和帐户中的目标存储桶。
+应该执行哪些操作来启用此复制？ （选择三个。）
+ 
+A.在源帐户中创建复制IAM角色。
+ 
+B.在目标帐户中创建复制IAM角色。
+ 
+C.在源存储桶策略中添加语句，以允许复制IAM角色复制对象。
+ 
+D.将语句添加到目标存储区策略，以允许复制IAM角色复制对象。
+ 
+E.在复制配置中将AccessControlTranslation.OwnerOverride设置为true，并向目标存储区策略添加一条语句，以允许复制IAM角色覆盖对象所有权。
+ 
+F.在复制配置中将AccessControlTranslation.Owner设置为目标，并向目标存储区策略添加一条语句，以允许复制IAM角色覆盖对象所有权。
+ 
+ 
+
+
+
+
+
+ 
+
+
+
+
+
+BCF
+
+问题＃48主题2			184
+ 
+公司的流行全球Web应用程序使用Auto Scaling组托管在Application Load Balancer（ALB）之后的Amazon EC2实例上。该公司正在启动一项新功能，并预计网络流量会出现不可预测的峰值。该站点当前包含大量媒体内容，并且该新功能添加了提交评级和评论的功能，这些评论和评论将存储在新的Amazon DynamoDB表中。 DevOps工程师的任务是确保Web应用程序可以随着增加的流量和工作量进行扩展
+哪些步骤组合可以完成此任务？ （选择两个。）
+ 
+A.配置一个Amazon CloudFront分发以缓存Web应用程序的静态和动态内容。
+ 
+B.将Web应用程序的ALB配置为在Amazon ElastiCache中缓存内容，并遵循HTTP缓存头。
+ 
+C.使用Amazon SQS异步处理新的评分和评论。
+ 
+D.用DynamoDB Accelerator替换DynamoDB表以存储评级和注释，以减少延迟。
+ 
+E.设置AWS Global Accelerator以缓存静态内容，并将动态请求传递到Web应用程序的ALB终端节点。
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+AC
+
+
+问题＃52主题2			188
+ 
+DevOps工程师的任务是将用于工作负载的Docker容器迁移到AWS。该解决方案必须允许通过更新每个容器并将其签入容器注册表来将更改自动部署到开发和测试环境中。推入容器后，必须自动部署它们。
+哪种解决方案可以满足这些要求？
+ 
+A.将容器映像存储在Amazon S3中。使用多容器Docker环境在AWS Elastic Beanstalk中运行容器。如果在Amazon S3中检测到新版本，请配置Elastic Beanstalk以重新部署容器。
+ 
+B.将容器映像存储在AWS Artifact中。如果创建了新的容器版本，请使用AWS CodePipeline触发部署。使用AWS CodeDeploy将新容器部署到Amazon EKS。
+ 
+C.将容器映像存储在Amazon ECR中。如果创建了新的容器版本，请使用AWS CodePipeline触发部署。使用AWS CodeDeploy将映像部署到AWS Fargate。
+ 
+D.将容器映像存储在Docker Hub中。在Amazon EC2实例上安装Docker并使用AWS CodePipeline和AWS CodeDeploy部署任何新容器。
+ 
+ 
+
+
+
+
+
+
+
+
+C
+
+
